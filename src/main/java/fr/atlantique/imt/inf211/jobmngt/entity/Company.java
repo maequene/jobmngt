@@ -1,17 +1,12 @@
 package fr.atlantique.imt.inf211.jobmngt.entity;
 // Generated Mar 3, 2025, 4:38:44 PM by Hibernate Tools 5.6.15.Final
 
-
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
- import jakarta.persistence.GeneratedValue;
  import com.fasterxml.jackson.annotation.JsonIdentityInfo;
  import com.fasterxml.jackson.annotation.ObjectIdGenerators;import java.util.HashSet;
 import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;

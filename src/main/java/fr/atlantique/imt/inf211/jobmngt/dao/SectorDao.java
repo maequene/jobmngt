@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import java.util.List;
 import jakarta.persistence.TypedQuery;
 
