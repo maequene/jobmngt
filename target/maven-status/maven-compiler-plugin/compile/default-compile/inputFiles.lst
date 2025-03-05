@@ -18,6 +18,7 @@
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/controller/PagesController.java
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/entity/Candidate.java
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/entity/AppUser.java
+/mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/controller/TestCandidateDaoController.java
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/entity/ApplicationMessage.java
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/dao/ApplicationDao.java
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/service/QualificationLevelService.java
@@ -27,3 +28,4 @@
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/dao/SectorDao.java
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/entity/Application.java
 /mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/dao/CompanyDao.java
+/mnt/c/Users/maely/OneDrive - Groupe ESAIP/PREPA 1/Bureau/IMT Atlantique/FIP 2A/INF 210/jobmngt/jobmngt/src/main/java/fr/atlantique/imt/inf211/jobmngt/controller/TestCompanyDaoController.java
