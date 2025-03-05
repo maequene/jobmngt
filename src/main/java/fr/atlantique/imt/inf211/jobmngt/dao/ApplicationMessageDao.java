@@ -22,6 +22,7 @@ public class ApplicationMessageDao {
 
     @PersistenceContext private EntityManager entityManager;
     
+    @Transactional
     public void persist(ApplicationMessage transientInstance) {
         logger.log(Level.INFO, "persisting Applicationmessage instance");
         try {
@@ -34,6 +35,7 @@ public class ApplicationMessageDao {
         }
     }
     
+    @Transactional
     public void remove(ApplicationMessage persistentInstance) {
         logger.log(Level.INFO, "removing Applicationmessage instance");
         try {
@@ -46,6 +48,7 @@ public class ApplicationMessageDao {
         }
     }
     
+    @Transactional
     public ApplicationMessage merge(ApplicationMessage detachedInstance) {
         logger.log(Level.INFO, "merging Applicationmessage instance");
         try {
@@ -58,7 +61,7 @@ public class ApplicationMessageDao {
             throw re;
         }
     }
-    
+
     public ApplicationMessage findById( int id) {
         logger.log(Level.INFO, "getting Applicationmessage instance with id: " + id);
         try {

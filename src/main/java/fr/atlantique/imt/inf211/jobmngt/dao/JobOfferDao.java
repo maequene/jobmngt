@@ -9,6 +9,10 @@ import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+
+import java.util.Optional;
+import java.util.List;
 
 /**
  * Home object for domain model class Joboffer.
@@ -22,6 +26,7 @@ public class JobOfferDao {
 
     @PersistenceContext private EntityManager entityManager;
     
+    @Transactional
     public void persist(JobOffer transientInstance) {
         logger.log(Level.INFO, "persisting Joboffer instance");
         try {
@@ -34,6 +39,7 @@ public class JobOfferDao {
         }
     }
     
+    @Transactional
     public void remove(JobOffer persistentInstance) {
         logger.log(Level.INFO, "removing Joboffer instance");
         try {
@@ -46,6 +52,7 @@ public class JobOfferDao {
         }
     }
     
+    @Transactional
     public JobOffer merge(JobOffer detachedInstance) {
         logger.log(Level.INFO, "merging Joboffer instance");
         try {
@@ -71,4 +78,38 @@ public class JobOfferDao {
             throw re;
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<JobOffer> findByCompany(Company company) {
+        String r = "SELECT j FROM JobOffer j WHERE j.company.id = :companyId";
+        TypedQuery<JobOffer> q = entityManager.createQuery(r, JobOffer.class);
+        q.setParameter("companyId", company.getId());
+        List<JobOffer> res = q.getResultList();
+        return res;
+    }
+
+    @Transactional(readOnly = true)
+    public List<JobOffer> findBySectorAndQualification(int sector, int qualificationLevel) {
+    String r = "SELECT j FROM JobOffer j " +
+               "JOIN j.sectors s " + // jointure avec les secteurs
+               "WHERE s.id = :sectorId AND j.qualificationlevel.id = :qualificationLevelId";
+    TypedQuery<JobOffer> q = entityManager.createQuery(r, JobOffer.class);
+    q.setParameter("sectorId", sector);
+    q.setParameter("qualificationLevelId", qualificationLevel);
+    List<JobOffer> res = q.getResultList();
+    return res;
+    }
+
+    @Transactional(readOnly=true)
+    public List<JobOffer> findAll(String sort, String order) {
+        String r = "SELECT j FROM JobOffer j ORDER BY j."+ sort;
+        if (order.equals("asc")) {
+            r += " ASC";
+        } else {
+            r += " DESC";
+        }
+        TypedQuery<JobOffer> q = entityManager.createQuery(r, JobOffer.class);
+        return q.getResultList();
+    }
+
 }

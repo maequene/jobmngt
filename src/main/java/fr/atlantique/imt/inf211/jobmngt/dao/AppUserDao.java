@@ -3,7 +3,7 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
- import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
@@ -26,6 +26,7 @@ public class AppUserDao {
 
     @PersistenceContext private EntityManager entityManager;
     
+    @Transactional
     public void persist(AppUser transientInstance) {
         logger.log(Level.INFO, "persisting Appuser instance");
         try {
@@ -38,6 +39,7 @@ public class AppUserDao {
         }
     }
     
+    @Transactional
     public void remove(AppUser persistentInstance) {
         logger.log(Level.INFO, "removing Appuser instance");
         try {
@@ -50,6 +52,7 @@ public class AppUserDao {
         }
     }
     
+    @Transactional
     public AppUser merge(AppUser detachedInstance) {
         logger.log(Level.INFO, "merging Appuser instance");
         try {

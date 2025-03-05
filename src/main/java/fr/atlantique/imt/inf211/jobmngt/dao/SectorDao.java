@@ -25,6 +25,7 @@ public class SectorDao {
 
     @PersistenceContext private EntityManager entityManager;
     
+    @Transactional
     public void persist(Sector transientInstance) {
         logger.log(Level.INFO, "persisting Sector instance");
         try {
@@ -37,6 +38,7 @@ public class SectorDao {
         }
     }
     
+    @Transactional
     public void remove(Sector persistentInstance) {
         logger.log(Level.INFO, "removing Sector instance");
         try {
@@ -49,6 +51,7 @@ public class SectorDao {
         }
     }
     
+    @Transactional
     public Sector merge(Sector detachedInstance) {
         logger.log(Level.INFO, "merging Sector instance");
         try {

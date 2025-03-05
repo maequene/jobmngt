@@ -25,6 +25,7 @@ public class QualificationLevelDao {
 
     @PersistenceContext private EntityManager entityManager;
 
+    @Transactional
     public void persist(QualificationLevel transientInstance) {
         logger.log(Level.INFO, "persisting Qualificationlevel instance");
         try {
@@ -37,6 +38,7 @@ public class QualificationLevelDao {
         }
     }
     
+    @Transactional
     public void remove(QualificationLevel persistentInstance) {
         logger.log(Level.INFO, "removing Qualificationlevel instance");
         try {
@@ -49,6 +51,7 @@ public class QualificationLevelDao {
         }
     }
     
+    @Transactional
     public QualificationLevel merge(QualificationLevel detachedInstance) {
         logger.log(Level.INFO, "merging Qualificationlevel instance");
         try {
