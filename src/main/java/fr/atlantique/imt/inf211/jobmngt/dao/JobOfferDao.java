@@ -3,7 +3,6 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
- import org.springframework.transaction.annotation.Transactional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;

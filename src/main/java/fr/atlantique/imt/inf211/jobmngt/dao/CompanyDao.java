@@ -3,12 +3,15 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
- import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
 /**
  * Home object for domain model class Company.
@@ -70,6 +73,18 @@ public class CompanyDao {
             logger.log(Level.SEVERE, "get failed", re);
             throw re;
         }
+    }
+
+    @Transactional(readOnly=true)
+    public List<Company> findAll(String sort, String order) {
+        String r = "SELECT c FROM Company c ORDER BY c." + sort;
+        if (order.equals("asc")) {
+            r += " ASC";
+        } else {
+            r += " DESC";
+        }
+        TypedQuery<Company> q = entityManager.createQuery(r, Company.class);
+        return q.getResultList();
     }
 }
 
