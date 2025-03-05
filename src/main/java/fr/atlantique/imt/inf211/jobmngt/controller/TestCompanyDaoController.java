@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 
@@ -74,7 +77,7 @@ public class TestCompanyDaoController {
         return null;
     }
 
-    // Delete a company that doesn't have joboffers
+    // Delete a company
     // curl -X DELETE localhost:8080/api/companies/7
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteCompany(@PathVariable int id) {

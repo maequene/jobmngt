@@ -2,15 +2,17 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 // Generated Mar 3, 2025, 4:39:13 PM by Hibernate Tools 5.6.15.Final
 
 
-import fr.atlantique.imt.inf211.jobmngt.entity.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Home object for domain model class Application.
@@ -100,4 +102,3 @@ public class ApplicationDao {
         return q.getResultList();
     }
 }
-
