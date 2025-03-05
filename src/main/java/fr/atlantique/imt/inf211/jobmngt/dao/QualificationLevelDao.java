@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import java.util.List;
 import jakarta.persistence.TypedQuery;
 
@@ -25,7 +24,7 @@ public class QualificationLevelDao {
 
     @PersistenceContext private EntityManager entityManager;
 
-    public void persist(QualificationLevel transientInstance) {
+    /**public void persist(QualificationLevel transientInstance) {
         logger.log(Level.INFO, "persisting Qualificationlevel instance");
         try {
             entityManager.persist(transientInstance);
@@ -35,9 +34,9 @@ public class QualificationLevelDao {
             logger.log(Level.SEVERE, "persist failed", re);
             throw re;
         }
-    }
+    }**/
     
-    public void remove(QualificationLevel persistentInstance) {
+   /** public void remove(QualificationLevel persistentInstance) {
         logger.log(Level.INFO, "removing Qualificationlevel instance");
         try {
             entityManager.remove(persistentInstance);
@@ -47,7 +46,7 @@ public class QualificationLevelDao {
             logger.log(Level.SEVERE, "remove failed", re);
             throw re;
         }
-    }
+    }**/
     
     public QualificationLevel merge(QualificationLevel detachedInstance) {
         logger.log(Level.INFO, "merging Qualificationlevel instance");
@@ -63,7 +62,7 @@ public class QualificationLevelDao {
     }
     
     public QualificationLevel findById( int id) {
-        logger.log(Level.INFO, "getting Qualificationlevel instance with id: " + id);
+        logger.log(Level.INFO, "Getting Qualificationlevel instance with id: " + id);
         try {
             QualificationLevel instance = entityManager.find(QualificationLevel.class, id);
             logger.log(Level.INFO, "get successful");
@@ -71,6 +70,23 @@ public class QualificationLevelDao {
         }
         catch (RuntimeException re) {
             logger.log(Level.SEVERE, "get failed", re);
+            throw re;
+        }
+    }
+
+    @Transactional(readOnly=true)
+    public List<QualificationLevel> findByLabel(String label) {
+        logger.log(Level.INFO, "Getting QualificationLevel instances with label: " + label);
+        try {
+            String query = "SELECT ql FROM QualificationLevel ql WHERE ql.label = :label";
+            TypedQuery<QualificationLevel> q = entityManager.createQuery(query,QualificationLevel.class);
+            q.setParameter("label",label);
+            List<QualificationLevel> results = q.getResultList();
+            logger.log(Level.INFO, "Get successful");
+            return results;
+        } 
+        catch(RuntimeException re){
+            logger.log(Level.SEVERE, "Get failed", re);
             throw re;
         }
     }
