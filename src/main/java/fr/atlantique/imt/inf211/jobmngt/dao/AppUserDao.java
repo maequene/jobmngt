@@ -63,7 +63,7 @@ public class AppUserDao {
     }
     
     public AppUser findById( int id) {
-        logger.log(Level.INFO, "getting Appuser instance with id: " + id);
+        logger.log(Level.INFO, "getting Appuser instance with id: {0}", id);
         try {
             AppUser instance = entityManager.find(AppUser.class, id);
             logger.log(Level.INFO, "get successful");
@@ -100,7 +100,7 @@ public class AppUserDao {
         TypedQuery<AppUser> q = entityManager.createQuery(r, AppUser.class);
         q.setParameter("login", user.getMail());
         q.setParameter("pwd", user.getPassword());
-        if (q.getResultList().size() == 0) {
+        if (q.getResultList().isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(q.getResultList().get(0));

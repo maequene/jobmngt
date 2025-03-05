@@ -63,7 +63,7 @@ public class CompanyDao {
     }
     
     public Company findById( int id) {
-        logger.log(Level.INFO, "getting Company instance with id: " + id);
+        logger.log(Level.INFO, "getting Company instance with id: {0}", id);
         try {
             Company instance = entityManager.find(Company.class, id);
             logger.log(Level.INFO, "get successful");
@@ -87,4 +87,3 @@ public class CompanyDao {
         return q.getResultList();
     }
 }
-

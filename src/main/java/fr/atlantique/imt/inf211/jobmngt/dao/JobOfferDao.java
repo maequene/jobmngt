@@ -59,7 +59,7 @@ public class JobOfferDao {
     }
     
     public JobOffer findById( int id) {
-        logger.log(Level.INFO, "getting Joboffer instance with id: " + id);
+        logger.log(Level.INFO, "getting Joboffer instance with id: {0}", id);
         try {
             JobOffer instance = entityManager.find(JobOffer.class, id);
             logger.log(Level.INFO, "get successful");

@@ -14,6 +14,7 @@ public class SectorServiceImpl implements SectorService {
     @Autowired
     SectorDao sectorDao;
 
+    @Override
     public List<Sector> listOfSectors() {
         return sectorDao.findAll("id", "ASC");
     }
@@ -22,5 +23,4 @@ public class SectorServiceImpl implements SectorService {
     public long countSectors() {
         return sectorDao.count();
     }
-
 }

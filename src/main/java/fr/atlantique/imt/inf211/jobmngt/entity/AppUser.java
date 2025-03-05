@@ -5,9 +5,8 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
- import jakarta.persistence.Column;
- import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,25 +31,25 @@ public class AppUser  implements java.io.Serializable {
         CANDIDATE, COMPANY
     }
 
-     private int id;
-     private String mail;
-     private String password;
-     private String city;
-     private Company company;
-     private Candidate candidate;
-     private UserType userType;
+    private int id;
+    private String mail;
+    private String password;
+    private String city;
+    private Company company;
+    private Candidate candidate;
+    private UserType userType;
 
     public AppUser() {
     }
 
 	
-    public AppUser(int id, String mail, String password) {
+    public AppUser(int id, String mail, String password, UserType userType) {
         this.id = id;
         this.mail = mail;
         this.password = password;
         this.userType = userType;
     }
-    public AppUser(int id, String mail, String password, String city, Company company, Candidate candidate) {
+    public AppUser(int id, String mail, String password, String city, Company company, Candidate candidate, UserType userType) {
        this.id = id;
        this.mail = mail;
        this.password = password;

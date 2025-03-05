@@ -3,12 +3,15 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
- import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
 /**
  * Home object for domain model class Candidate.
@@ -60,7 +63,7 @@ public class CandidateDao {
     }
     
     public Candidate findById( int id) {
-        logger.log(Level.INFO, "getting Candidate instance with id: " + id);
+        logger.log(Level.INFO, "getting Candidate instance with id: {0}", id);
         try {
             Candidate instance = entityManager.find(Candidate.class, id);
             logger.log(Level.INFO, "get successful");
@@ -71,5 +74,16 @@ public class CandidateDao {
             throw re;
         }
     }
-}
 
+    @Transactional(readOnly=true)
+    public List<Candidate> findAll(String sort, String order) {
+        String r = "SELECT c FROM Candidate c ORDER BY c." + sort;
+        if (order.equals("asc")) {
+            r += " ASC";
+        } else {
+            r += " DESC";
+        }
+        TypedQuery<Candidate> q = entityManager.createQuery(r, Candidate.class);
+        return q.getResultList();
+    }
+}

@@ -24,30 +24,6 @@ public class QualificationLevelDao {
 
     @PersistenceContext private EntityManager entityManager;
 
-    /**public void persist(QualificationLevel transientInstance) {
-        logger.log(Level.INFO, "persisting Qualificationlevel instance");
-        try {
-            entityManager.persist(transientInstance);
-            logger.log(Level.INFO, "persist successful");
-        }
-        catch (RuntimeException re) {
-            logger.log(Level.SEVERE, "persist failed", re);
-            throw re;
-        }
-    }**/
-    
-   /** public void remove(QualificationLevel persistentInstance) {
-        logger.log(Level.INFO, "removing Qualificationlevel instance");
-        try {
-            entityManager.remove(persistentInstance);
-            logger.log(Level.INFO, "remove successful");
-        }
-        catch (RuntimeException re) {
-            logger.log(Level.SEVERE, "remove failed", re);
-            throw re;
-        }
-    }**/
-    
     public QualificationLevel merge(QualificationLevel detachedInstance) {
         logger.log(Level.INFO, "merging Qualificationlevel instance");
         try {
@@ -62,7 +38,7 @@ public class QualificationLevelDao {
     }
     
     public QualificationLevel findById( int id) {
-        logger.log(Level.INFO, "Getting Qualificationlevel instance with id: " + id);
+        logger.log(Level.INFO, "Getting Qualificationlevel instance with id: {0}", id);
         try {
             QualificationLevel instance = entityManager.find(QualificationLevel.class, id);
             logger.log(Level.INFO, "get successful");
@@ -76,7 +52,7 @@ public class QualificationLevelDao {
 
     @Transactional(readOnly=true)
     public List<QualificationLevel> findByLabel(String label) {
-        logger.log(Level.INFO, "Getting QualificationLevel instances with label: " + label);
+        logger.log(Level.INFO, "Getting QualificationLevel instances with label: {0}", label);
         try {
             String query = "SELECT ql FROM QualificationLevel ql WHERE ql.label = :label";
             TypedQuery<QualificationLevel> q = entityManager.createQuery(query,QualificationLevel.class);

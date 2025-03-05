@@ -4,9 +4,9 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
- import jakarta.persistence.GeneratedValue;
- import com.fasterxml.jackson.annotation.JsonIdentityInfo;
- import com.fasterxml.jackson.annotation.ObjectIdGenerators;import java.util.Date;
+import jakarta.persistence.GeneratedValue;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import jakarta.persistence.Column;
@@ -33,14 +33,14 @@ import jakarta.persistence.TemporalType;
 public class Application  implements java.io.Serializable {
 
 
-     private int id;
-     private Candidate candidate;
-     private QualificationLevel qualificationlevel;
-     private String cv;
-     private Date appdate;
-     private Set<ApplicationMessage> applicationmessages = new HashSet<ApplicationMessage>(0);
-     private Set<OfferMessage> offermessages = new HashSet<OfferMessage>(0);
-     private Set<Sector> sectors = new HashSet<Sector>(0);
+    private int id;
+    private Candidate candidate;
+    private QualificationLevel qualificationlevel;
+    private String cv;
+    private Date appdate;
+    private Set<ApplicationMessage> applicationmessages = new HashSet<>(0);
+    private Set<OfferMessage> offermessages = new HashSet<>(0);
+    private Set<Sector> sectors = new HashSet<>(0);
 
     public Application() {
     }

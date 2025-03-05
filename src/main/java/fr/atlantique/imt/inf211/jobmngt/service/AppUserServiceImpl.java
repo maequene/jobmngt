@@ -15,18 +15,22 @@ public class AppUserServiceImpl implements AppUserService {
     @Autowired
     private AppUserDao appUserDao;
 
+    @Override
     public List<AppUser> listOfUsers() {
         return appUserDao.findAll("name", "ASC");
     }
 
+    @Override
     public AppUser getUserapp(Integer id) {
         return appUserDao.findById(id);
     }
 
+    @Override
     public Long nbUsers() {
         return appUserDao.count();
     }
 
+    @Override
     public Optional<AppUser> checkLogin(AppUser u) {
         return appUserDao.checkLogin(u);
     }

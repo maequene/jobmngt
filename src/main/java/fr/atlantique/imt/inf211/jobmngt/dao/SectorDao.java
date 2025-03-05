@@ -38,7 +38,7 @@ public class SectorDao {
     }
     
     public Sector findById( int id) {
-        logger.log(Level.INFO, "getting Sector instance with id: " + id);
+        logger.log(Level.INFO, "getting Sector instance with id: {0}", id);
         try {
             Sector instance = entityManager.find(Sector.class, id);
             logger.log(Level.INFO, "get successful");
@@ -52,7 +52,7 @@ public class SectorDao {
 
     @Transactional(readOnly=true)
     public List<Sector> findByLabel(String label) {
-        logger.log(Level.INFO, "Getting Sector instance with label: " + label);
+        logger.log(Level.INFO, "Getting Sector instance with label: {0}", label);
         try {
             String query = "SELECT s FROM Sector s WHERE s.label = :label";
             TypedQuery<Sector> q = entityManager.createQuery(query,Sector.class);

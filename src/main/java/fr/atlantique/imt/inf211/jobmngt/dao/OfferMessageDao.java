@@ -3,7 +3,6 @@ package fr.atlantique.imt.inf211.jobmngt.dao;
 
 
 import fr.atlantique.imt.inf211.jobmngt.entity.*;
- import org.springframework.transaction.annotation.Transactional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
@@ -59,8 +58,8 @@ public class OfferMessageDao {
         }
     }
     
-    public OfferMessage findById( int id) {
-        logger.log(Level.INFO, "getting Offermessage instance with id: " + id);
+    public OfferMessage findById(int id) {
+        logger.log(Level.INFO, "getting Offermessage instance with id: {0}", id);
         try {
             OfferMessage instance = entityManager.find(OfferMessage.class, id);
             logger.log(Level.INFO, "get successful");

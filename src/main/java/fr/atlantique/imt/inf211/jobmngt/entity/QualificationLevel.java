@@ -4,9 +4,9 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
- import jakarta.persistence.GeneratedValue;
- import com.fasterxml.jackson.annotation.JsonIdentityInfo;
- import com.fasterxml.jackson.annotation.ObjectIdGenerators;import java.util.HashSet;
+import jakarta.persistence.GeneratedValue;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;import java.util.HashSet;
 import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,11 +27,10 @@ import jakarta.persistence.UniqueConstraint;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class QualificationLevel  implements java.io.Serializable {
 
-
-     private int id;
-     private String label;
-     private Set<Application> applications = new HashSet<Application>(0);
-     private Set<JobOffer> joboffers = new HashSet<JobOffer>(0);
+    private int id;
+    private String label;
+    private Set<Application> applications = new HashSet<>(0);
+    private Set<JobOffer> joboffers = new HashSet<>(0);
 
     public QualificationLevel() {
     }
@@ -48,7 +47,7 @@ public class QualificationLevel  implements java.io.Serializable {
        this.joboffers = joboffers;
     }
    
-     @Id
+    @Id
 	@SequenceGenerator(name = "QUALIFICATIONLEVEL_ID_GENERATOR", sequenceName = "QUALIFICATIONLEVEL_ID_SEQ",allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "QUALIFICATIONLEVEL_ID_GENERATOR") 
 

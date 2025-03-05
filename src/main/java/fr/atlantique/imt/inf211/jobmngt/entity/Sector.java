@@ -4,9 +4,9 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
- import jakarta.persistence.GeneratedValue;
- import com.fasterxml.jackson.annotation.JsonIdentityInfo;
- import com.fasterxml.jackson.annotation.ObjectIdGenerators;import java.util.HashSet;
+import jakarta.persistence.GeneratedValue;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;import java.util.HashSet;
 import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,10 +30,10 @@ import jakarta.persistence.UniqueConstraint;
 public class Sector  implements java.io.Serializable {
 
 
-     private int id;
-     private String label;
-     private Set<Application> applications = new HashSet<Application>(0);
-     private Set<JobOffer> joboffers = new HashSet<JobOffer>(0);
+    private int id;
+    private String label;
+    private Set<Application> applications = new HashSet<>(0);
+    private Set<JobOffer> joboffers = new HashSet<>(0);
 
     public Sector() {
     }
