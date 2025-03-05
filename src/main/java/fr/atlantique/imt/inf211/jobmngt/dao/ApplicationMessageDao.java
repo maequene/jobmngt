@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Home object for domain model class Applicationmessage.
@@ -21,6 +22,7 @@ public class ApplicationMessageDao {
 
     @PersistenceContext private EntityManager entityManager;
     
+    @Transactional
     public void persist(ApplicationMessage transientInstance) {
         logger.log(Level.INFO, "persisting Applicationmessage instance");
         try {
@@ -33,6 +35,7 @@ public class ApplicationMessageDao {
         }
     }
     
+    @Transactional
     public void remove(ApplicationMessage persistentInstance) {
         logger.log(Level.INFO, "removing Applicationmessage instance");
         try {
@@ -45,6 +48,7 @@ public class ApplicationMessageDao {
         }
     }
     
+    @Transactional
     public ApplicationMessage merge(ApplicationMessage detachedInstance) {
         logger.log(Level.INFO, "merging Applicationmessage instance");
         try {
@@ -57,7 +61,7 @@ public class ApplicationMessageDao {
             throw re;
         }
     }
-    
+
     public ApplicationMessage findById( int id) {
         logger.log(Level.INFO, "getting Applicationmessage instance with id: {0}", id);
         try {

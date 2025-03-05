@@ -25,6 +25,7 @@ public class CompanyDao {
 
     @PersistenceContext private EntityManager entityManager;
     
+    @Transactional
     public void persist(Company transientInstance) {
         logger.log(Level.INFO, "persisting Company instance");
         try {
@@ -37,6 +38,7 @@ public class CompanyDao {
         }
     }
     
+    @Transactional
     public void remove(Company persistentInstance) {
         logger.log(Level.INFO, "removing Company instance");
         try {
@@ -49,6 +51,7 @@ public class CompanyDao {
         }
     }
     
+    @Transactional
     public Company merge(Company detachedInstance) {
         logger.log(Level.INFO, "merging Company instance");
         try {
