@@ -16,7 +16,7 @@ import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
 
 @RestController
-@RequestMapping(value = "/api/application")
+@RequestMapping(value = "/api/joboffer")
 public class TestJobOfferDaoController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class TestJobOfferDaoController {
     }
 
     // Create a job offer
-    // curl -X POST localhost:8080/api/companies/joboffers -H \
+    // curl -X POST localhost:8080/api/companies/joboffer -H \
     // 'Content-type:application/json' -d \
     // '{"title": "Développeur Java", "taskdescription": "Développer des applications Java dans un environnement agile.", 
     // "publicationdate": "2025-03-05", 

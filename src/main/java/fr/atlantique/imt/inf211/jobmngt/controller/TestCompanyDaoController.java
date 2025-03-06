@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 
@@ -16,10 +17,13 @@ public class TestCompanyDaoController {
     @Autowired
     private CompanyDao companyDao;
 
+    @Autowired
+    private AppUserDao appUserDao;
+
     //Lister toutes les entreprises existantes
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Company> all() {
-        List<Company> list = companyDao.findAll("mail", "ASC");
+        List<Company> list = companyDao.findAll("appuser.mail", "ASC");
         return list;
     }
 
@@ -36,8 +40,11 @@ public class TestCompanyDaoController {
         appUser.setMail("mnc@imt.fr");
         appUser.setPassword("2580");
         appUser.setCity("Brest");
+        appUserDao.persist(appUser);
+        //appUserDao.flush(); // Force l'enregistrement immédiat pour récupérer l'ID
         
         Company aNewCompany = new Company();
+        aNewCompany.setId(appUser.getId()); // Associer explicitement l'ID
         aNewCompany.setAppuser(appUser);
         aNewCompany.setDenomination("myFirstCompany");
         aNewCompany.setDescription("Desc of my new company");

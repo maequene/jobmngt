@@ -2,6 +2,8 @@ package fr.atlantique.imt.inf211.jobmngt.entity;
 // Generated Mar 3, 2025, 4:38:44 PM by Hibernate Tools 5.6.15.Final
 
 
+import java.beans.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -37,26 +39,23 @@ public class AppUser  implements java.io.Serializable {
     private String city;
     private Company company;
     private Candidate candidate;
-    private UserType userType;
 
     public AppUser() {
     }
 
 	
-    public AppUser(int id, String mail, String password, UserType userType) {
+    public AppUser(int id, String mail, String password) {
         this.id = id;
         this.mail = mail;
         this.password = password;
-        this.userType = userType;
     }
-    public AppUser(int id, String mail, String password, String city, Company company, Candidate candidate, UserType userType) {
+    public AppUser(int id, String mail, String password, String city, Company company, Candidate candidate) {
        this.id = id;
        this.mail = mail;
        this.password = password;
        this.city = city;
        this.company = company;
        this.candidate = candidate;
-       this.userType = userType;
     }
    
      @Id
@@ -119,12 +118,19 @@ public class AppUser  implements java.io.Serializable {
         this.candidate = candidate;
     }
 
-    @Column(name="user_type", nullable=false)
-    public UserType getUserType() {
-        return this.userType;
+    public void setUserType(UserType userType) {
+        // do nothing
     }
 
-    public void setUserType(UserType userType){
-        this.userType = userType;
+    @Transient
+    public UserType getUserType() {
+       if (this.company != null) {
+           return UserType.COMPANY;
+       } else if (this.candidate != null) {
+           return UserType.CANDIDATE;
+       } else {
+           return null;
+       }
     }
+
 }

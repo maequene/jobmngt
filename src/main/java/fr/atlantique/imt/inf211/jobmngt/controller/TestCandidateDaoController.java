@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 
@@ -16,6 +17,9 @@ public class TestCandidateDaoController {
     
     @Autowired
     private CandidateDao candidateDao;
+
+    @Autowired
+    private AppUserDao appUserDao;
 
     //Lister tous les candidats existants 
     @GetMapping
@@ -28,11 +32,13 @@ public class TestCandidateDaoController {
     @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Candidate newCandidate() {
         AppUser appUser = new AppUser();
-        appUser.setMail("mnc@imt.fr");
-        appUser.setPassword("2580");
-        appUser.setCity("Brest");
+        appUser.setMail("test47@imt.fr");
+        appUser.setPassword("898657");
+        appUser.setCity("Rennes");
+        appUserDao.persist(appUser);
 
         Candidate aNewCandidate = new Candidate();
+        aNewCandidate.setId(appUser.getId()); // Associer explicitement l'ID
         aNewCandidate.setAppuser(appUser);
         aNewCandidate.setLastname("myLastName");
         aNewCandidate.setFirstname("myFirstName");
@@ -52,7 +58,7 @@ public class TestCandidateDaoController {
     public Candidate replaceCandidate(@PathVariable int id) {
         Candidate candidate = candidateDao.findById(id);
         if (candidate != null) {
-            candidate.getAppuser().setMail("atlantique@imt.fr");
+            candidate.getAppuser().setMail("atlantique4576857@imt.fr");
             candidate.getAppuser().setPassword("5678");
             candidate.getAppuser().setCity("Brest");
             candidate.setLastname("Picaud");
