@@ -29,19 +29,20 @@ public class TestCandidateDaoController {
     }
 
     //Créer un nouveau candidat 
+    //curl -X GET "http://localhost:8080/api/candidates/create
     @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Candidate newCandidate() {
         AppUser appUser = new AppUser();
-        appUser.setMail("test47@imt.fr");
-        appUser.setPassword("898657");
+        appUser.setMail("mae@imt.fr");
+        appUser.setPassword("564");
         appUser.setCity("Rennes");
         appUserDao.persist(appUser);
 
         Candidate aNewCandidate = new Candidate();
         aNewCandidate.setId(appUser.getId()); // Associer explicitement l'ID
         aNewCandidate.setAppuser(appUser);
-        aNewCandidate.setLastname("myLastName");
-        aNewCandidate.setFirstname("myFirstName");
+        aNewCandidate.setLastname("Mae");
+        aNewCandidate.setFirstname("Quen");
         
         candidateDao.persist(aNewCandidate);
         return aNewCandidate;

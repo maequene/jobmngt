@@ -30,7 +30,7 @@ public class TestJobOfferDaoController {
 
     @RequestMapping(value = "/listall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<JobOffer> getAllJobOffers() {
-        return JobOfferDao.findAll("title",null);  // Assurez-vous que findAll() est défini dans JobOfferDao
+        return JobOfferDao.findAll("title","");  // Assurez-vous que findAll() est défini dans JobOfferDao
     }
 
     // Create a job offer

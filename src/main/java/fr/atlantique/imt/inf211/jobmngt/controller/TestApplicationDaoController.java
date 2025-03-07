@@ -1,5 +1,7 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 @RequestMapping(value = "/api/application")
@@ -32,18 +37,24 @@ public class TestApplicationDaoController {
     }
 
     // Create an application
-    // curl -X POST localhost:8080/api/companies/joboffer -H \
-    // 'Content-type:application/json' -d \
-    // '{"cv": "monCV.pdf", 
-    // "appdate": "2025-03-05", 
-    // "candidate": {"id": 1}, 
-    // "qualificationlevel": {"id": 2}, 
-    // "sectors": [{"id": 1}, {"id": 3}]}'
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Application newApplication(@RequestBody Application application) {
-        ApplicationDao.persist(application);
-        return application;
+    //curl -X GET "http://localhost:8080/api/application/create
+    @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Application newApplication() throws ParseException {
+        // Récupérer un candidat existant
+        Candidate candidate = candidateDao.findById(18);
+        // Récupérer un niveau de qualification existant
+        QualificationLevel qualificationLevel = qualificationLevelDao.findById(2);
+        // Créer une nouvelle application avec des valeurs prédéfinies
+        Application newApplication = new Application();
+        newApplication.setCandidate(candidate);
+        newApplication.setQualificationlevel(qualificationLevel);
+        newApplication.setCv("cv_par_defaut.pdf");
+        newApplication.setAppdate(new SimpleDateFormat("yyyy-mm-dd").parse("2025-03-02"));
+        // Sauvegarder l'application
+        ApplicationDao.persist(newApplication);
+        return newApplication;
     }
+
 
     // Get information of an applicattion by sector and qualification level
     @RequestMapping(value = "/sector/{sectorId}/qualification/{qualificationLevelId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,24 +62,18 @@ public class TestApplicationDaoController {
         return ApplicationDao.getApplicationsBySectorAndQualification(sectorId, qualificationLevelId);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Application updateApplication(@RequestBody Application updatedApplication) {
-        // Récupérer la candidature existante avec l'ID fourni
-        Application existingApplication = ApplicationDao.findById(updatedApplication.getId());
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Application updateApplication(@PathVariable int id) throws ParseException {
+         Application existingApplication = ApplicationDao.findById(id);
+        // Récupérer un niveau de qualification existant 
+        QualificationLevel qualificationLevel = qualificationLevelDao.findById(1);
         // Mettre à jour les informations de la candidature
-        existingApplication.setCv(updatedApplication.getCv());
-        existingApplication.setAppdate(updatedApplication.getAppdate());
-        // Mettre à jour le candidat associé
-        Candidate candidate = candidateDao.findById(updatedApplication.getCandidate().getId());
-        existingApplication.setCandidate(candidate);
-        // Mettre à jour le niveau de qualification
-        QualificationLevel qualificationLevel = qualificationLevelDao.findById(updatedApplication.getQualificationlevel().getId());
+        existingApplication.setCv("nouveau_cv.pdf"); // Nouveau CV en dur
+        existingApplication.setAppdate(new SimpleDateFormat("yyyy-mm-dd").parse("2024-08-02")); // Nouvelle date
         existingApplication.setQualificationlevel(qualificationLevel);
-        // Mettre à jour les secteurs associés
-        existingApplication.setSectors(updatedApplication.getSectors());
-        // Enregistrer les modifications dans la base de données
+        // Enregistrer les modifications
         ApplicationDao.merge(existingApplication);
-        // Retourner la candidature mise à jour
         return existingApplication;
     }
 
