@@ -1,19 +1,26 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.SectorDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
-import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
 
 @RestController
 @RequestMapping(value = "/api/joboffer")
@@ -28,21 +35,31 @@ public class TestJobOfferDaoController {
     @Autowired
     private QualificationLevelDao qualificationLevelDao;
 
-    @RequestMapping(value = "/listall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired 
+    private SectorDao sectorDao;
+
+    // Lister toutes les offres d'emploi existantes
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<JobOffer> getAllJobOffers() {
-        return JobOfferDao.findAll("title","");  // Assurez-vous que findAll() est défini dans JobOfferDao
+        return JobOfferDao.findAll("title","ASC");  // Assurez-vous que findAll() est défini dans JobOfferDao
     }
 
     // Create a job offer
-    // curl -X POST localhost:8080/api/companies/joboffer -H \
-    // 'Content-type:application/json' -d \
-    // '{"title": "Développeur Java", "taskdescription": "Développer des applications Java dans un environnement agile.", 
-    // "publicationdate": "2025-03-05", 
-    // "company": {"id": 1}, 
-    // "qualificationlevel": {"id": 2}, 
-    // "sectors": [{"id": 1}, {"id": 3}]}'
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public JobOffer newJobOffer(@RequestBody JobOffer joboffer) {
+    @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public JobOffer newJobOffer() {
+        Company company = companyDao.findById(7);
+        QualificationLevel qualificationLevel = qualificationLevelDao.findById(3);
+        Sector sector = sectorDao.findById(19);
+        Set<Sector> sectors = new HashSet<>();
+        sectors.add(sector);
+        
+        JobOffer joboffer = new JobOffer();
+        joboffer.setTitle("CDI fullstack dev");
+        joboffer.setTaskdescription("Développeur view.js++");
+        joboffer.setPublicationdate(new Date());
+        joboffer.setCompany(company);
+        joboffer.setQualificationlevel(qualificationLevel);
+        joboffer.setSectors(sectors);
         JobOfferDao.persist(joboffer);
         return joboffer;
     }
@@ -52,26 +69,16 @@ public class TestJobOfferDaoController {
         return JobOfferDao.findBySectorAndQualification(sectorId, qualificationLevelId);
     }
 
-    @RequestMapping(value = "/joboffers/update", method = RequestMethod.POST)
-    public JobOffer updateJobOffer(@RequestBody JobOffer updatedJobOffer) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public JobOffer updateJobOffer(@PathVariable int id) {
         // Récupérer l'offre d'emploi existante avec l'ID de l'offre d'emploi
-        JobOffer existingJobOffer = JobOfferDao.findById(updatedJobOffer.getId());
-        // Mettre à jour les informations de l'offre d'emploi existante
-        existingJobOffer.setTitle(updatedJobOffer.getTitle());
-        existingJobOffer.setTaskdescription(updatedJobOffer.getTaskdescription());
-        existingJobOffer.setPublicationdate(updatedJobOffer.getPublicationdate());
-        // Mettre à jour l'entreprise associée
-        Company company = companyDao.findById(updatedJobOffer.getCompany().getId());
-        existingJobOffer.setCompany(company);
-        // Mettre à jour le niveau de qualification
-        QualificationLevel qualificationLevel = qualificationLevelDao.findById(updatedJobOffer.getQualificationlevel().getId());
-        existingJobOffer.setQualificationlevel(qualificationLevel);
-        // Mettre à jour les secteurs associés
-        Set<Sector> sectors = existingJobOffer.getSectors();
-        existingJobOffer.setSectors(sectors);
-        // Enregistrer les modifications dans la base de données
-        JobOfferDao.merge(existingJobOffer);
-        // Retourner l'offre d'emploi mise à jour
+        JobOffer existingJobOffer = JobOfferDao.findById(id);
+        if (existingJobOffer != null) {
+            existingJobOffer.setTitle("Développeur Java Fullstack");
+            existingJobOffer.setTaskdescription("Développement Java Fullstack en agile");
+            existingJobOffer.setPublicationdate(new Date());
+            JobOfferDao.merge(existingJobOffer);
+        }
         return existingJobOffer;
     }
-}
+ }

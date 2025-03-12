@@ -127,14 +127,13 @@
 					</execution>
 				</executions>
 				<configuration>
-		           <executable>python3</executable>
-			           <arguments>
-            			    <argument>src/main/tools/cleanGeneratedCode.py</argument>
-							<argument>-s ${project.basedir}/src/main/java/</argument>
+				   <executable>python3</executable>
+					   <arguments>
+							<argument>src/main/tools/cleanGeneratedCode.py</argument>
 							<argument>-e ${project.basedir}/src/main/java/fr/atlantique/imt/inf211/jobmngt/entity/</argument>
 							<argument>-r ${project.basedir}/src/main/java/fr/atlantique/imt/inf211/jobmngt/dao/</argument>
-			           </arguments>    
-		        </configuration>
+					   </arguments>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
