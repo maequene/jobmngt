@@ -47,7 +47,7 @@ public class TestJobOfferDaoController {
     // Create a job offer
     @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public JobOffer newJobOffer() {
-        Company company = companyDao.findById(7);
+        Company company = companyDao.findById(12);
         QualificationLevel qualificationLevel = qualificationLevelDao.findById(3);
         Sector sector = sectorDao.findById(19);
         Set<Sector> sectors = new HashSet<>();

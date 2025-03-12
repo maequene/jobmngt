@@ -48,7 +48,7 @@ public class TestApplicationDaoController {
     @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Application newApplication() throws ParseException {
         // Récupérer un candidat existant
-        Candidate candidate = candidateDao.findById(8);
+        Candidate candidate = candidateDao.findById(13);
         // Récupérer un niveau de qualification existant
         QualificationLevel qualificationLevel = qualificationLevelDao.findById(3);
         // Récupérer un secteur existant 
