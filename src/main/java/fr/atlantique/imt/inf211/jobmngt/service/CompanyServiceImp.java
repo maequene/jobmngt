@@ -40,5 +40,10 @@ public class CompanyServiceImp implements CompanyService {
         companyDao.persist(aNewCompany);
     }
 
+    @Transactional
+    public Company getCompany(Integer id) {
+        return companyDao.findById(id);
+    }
+
 
 }

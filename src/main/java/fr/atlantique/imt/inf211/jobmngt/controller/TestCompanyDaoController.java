@@ -53,11 +53,15 @@ public class TestCompanyDaoController {
     }
 
     // Get information of a company by id
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company one(@PathVariable int id) {
-        return companyDao.findById(id);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView ShowCompany(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("company/companyView.html");
+        Company company = companyServ.getCompany(id);
+        mav.addObject("company", company);
+        return mav;
     }
 
+    /* 
     // Modify information about a company
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Company replaceCompany(@PathVariable int id) {
@@ -74,7 +78,6 @@ public class TestCompanyDaoController {
     }
 
     // Delete a company
-    // curl -X DELETE localhost:8080/api/companies/7
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public void deleteCompany(@PathVariable int id) {
         Company company = companyDao.findById(id);
@@ -83,5 +86,5 @@ public class TestCompanyDaoController {
             companyDao.remove(company);
             appUserDao.remove(appUser);
         }
-    }
+    }*/
 }

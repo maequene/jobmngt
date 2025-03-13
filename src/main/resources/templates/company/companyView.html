@@ -16,8 +16,12 @@
                 readonly />
         </fieldset>
         <fieldset class="mb-3">
+            <label for="cityid" class="form-label">Mail</label>:
+            <input type="text" id="mail" class="form-control" name="mail" th:value="${company.appuser.mail}" readonly />
+        </fieldset>
+        <fieldset class="mb-3">
             <label for="cityid" class="form-label">City</label>:
-            <input type="text" id="cityid" class="form-control" name="city" th:value="${company.city}" readonly />
+            <input type="text" id="cityid" class="form-control" name="city" th:value="${company.appuser.city}" readonly />
         </fieldset>
     </form>
 
@@ -28,20 +32,14 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Task</th>
                     <th scope="col">Publication date</th>
-                    <th scope="col">Qualification level</th>
-                    <th scope="col">Sectors</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="job : ${company.joboffers}">
                     <th scope="row" th:text="${job.id}" />
                     <td th:text="${job.title}" />
-                    <td th:text="${job.taskdescription}" />
                     <td th:text="${job.publicationdate}" />
-                    <td th:text="${job.qualificationlevel.label}" />
-                    <td><span th:each="sec : ${job.sectors}"><span th:text="${sec.label}"></span> </span></td>
                 </tr>
             </tbody>
         </table>
