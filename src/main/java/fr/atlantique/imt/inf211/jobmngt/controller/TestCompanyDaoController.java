@@ -40,7 +40,7 @@ public class TestCompanyDaoController {
     public Company newCompany() {
 
         AppUser appUser = new AppUser();
-        appUser.setMail("mnc@imt.fr");
+        appUser.setMail("mgh@imt.fr");
         appUser.setPassword("2580");
         appUser.setCity("Brest");
         appUserDao.persist(appUser);
@@ -83,7 +83,9 @@ public class TestCompanyDaoController {
     public void deleteCompany(@PathVariable int id) {
         Company company = companyDao.findById(id);
         if (company != null) {
+            AppUser appUser = company.getAppuser();
             companyDao.remove(company);
+            appUserDao.remove(appUser);
         }
     }
 }

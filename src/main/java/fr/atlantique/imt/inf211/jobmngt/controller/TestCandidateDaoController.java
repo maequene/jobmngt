@@ -75,7 +75,9 @@ public class TestCandidateDaoController {
     public void deleteCandidate(@PathVariable int id) {
         Candidate candidate = candidateDao.findById(id);
         if (candidate != null) {
+            AppUser appUser = candidate.getAppuser();
             candidateDao.remove(candidate);
+            appUserDao.remove(appUser);
         }
     }
 }
