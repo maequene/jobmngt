@@ -40,6 +40,9 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/companies}">Companies</a>
                     </li>
+                    <li class="nav-item" th:if="${session.user != null and session.usertype == 'company'}">
+                        <a class="nav-link" href="/companies/joboffers_viewcompany">Offer management</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/">Jobs</a>
                     </li>

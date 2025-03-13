@@ -16,6 +16,8 @@ import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/companies")
@@ -60,6 +62,28 @@ public class TestCompanyDaoController {
         mav.addObject("company", company);
         return mav;
     }
+
+    @RequestMapping(value = "/joboffers_viewcompany", method = RequestMethod.GET)
+    public ModelAndView showCompanyOffers(HttpServletRequest request) {
+        // Récupère la session HTTP
+        HttpSession session = request.getSession();
+        
+        // Vérifie si l'utilisateur est connecté (s'il existe un attribut "user" dans la session)
+        AppUser appUser = (AppUser) session.getAttribute("user");
+        
+        if (appUser != null) {
+            // L'utilisateur est connecté, afficher la page des offres de l'entreprise
+            ModelAndView mav = new ModelAndView("company/companyJobOfferList.html");
+            Company company = companyDao.findById(appUser.getId());
+            mav.addObject("company", company);
+            // Vous pouvez ajouter des objets au modèle ici si nécessaire (ex: offres d'entreprise)
+            return mav;
+        } else {
+            // L'utilisateur n'est pas connecté, rediriger vers la page d'accueil
+            return new ModelAndView("redirect:/");
+        }
+}
+
 
     /* 
     // Modify information about a company

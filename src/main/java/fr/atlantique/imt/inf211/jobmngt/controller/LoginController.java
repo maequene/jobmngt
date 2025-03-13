@@ -51,7 +51,7 @@ public class LoginController {
             } else {
                 session.setAttribute("usertype", "company");
                 session.setAttribute("uid", appUser.getId());
-                return new ModelAndView("redirect:/companies");
+                return new ModelAndView("redirect:/companies/joboffers_viewcompany");
             }
         } else {
             ModelAndView mav = new ModelAndView("login");
