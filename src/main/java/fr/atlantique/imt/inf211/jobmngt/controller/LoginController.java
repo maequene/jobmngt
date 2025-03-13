@@ -44,13 +44,15 @@ public class LoginController {
             appUser = user.get();
             System.out.println("User found uid: " + appUser.getId());
             session.setAttribute("user", appUser);
-            if (appUser.getUserType().equals("candidate"))
+            if (appUser.getUserType().equals("candidate")){
                 session.setAttribute("usertype", "candidate");
-            else
+                session.setAttribute("uid", appUser.getId());
+                return new ModelAndView("redirect:/candidates");
+            } else {
                 session.setAttribute("usertype", "company");
-
-            session.setAttribute("uid", appUser.getId());
-            return new ModelAndView("redirect:/");
+                session.setAttribute("uid", appUser.getId());
+                return new ModelAndView("redirect:/companies");
+            }
         } else {
             ModelAndView mav = new ModelAndView("login");
             mav.addObject("error", "Password or username incorrect.");
