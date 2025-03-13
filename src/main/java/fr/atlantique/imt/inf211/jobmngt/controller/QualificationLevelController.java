@@ -17,7 +17,6 @@ public class QualificationLevelController {
     @RequestMapping(value = "/qualificationLevels", method = RequestMethod.GET)
     public ModelAndView listOfQualificationLevels() {
         ModelAndView modelAndView = new ModelAndView("qualificationLevel/qualificationLevelList");
-
         modelAndView.addObject("qualificationlevellist", qualificationLevelService.listOfQualificationLevels());
         return modelAndView;
     }

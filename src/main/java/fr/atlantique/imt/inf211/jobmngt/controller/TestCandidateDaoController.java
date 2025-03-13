@@ -71,7 +71,7 @@ public class TestCandidateDaoController {
     }
 
     // Delete a candidate by id
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public void deleteCandidate(@PathVariable int id) {
         Candidate candidate = candidateDao.findById(id);
         if (candidate != null) {

@@ -79,7 +79,7 @@ public class TestCompanyDaoController {
 
     // Delete a company
     // curl -X DELETE localhost:8080/api/companies/7
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public void deleteCompany(@PathVariable int id) {
         Company company = companyDao.findById(id);
         if (company != null) {
