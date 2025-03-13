@@ -7,16 +7,22 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
+import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
 
-@RestController
-@RequestMapping(value = "/api/companies")
+@Controller
+@RequestMapping(value = "/companies")
 public class TestCompanyDaoController {
+    @Autowired
+    private CompanyService companyServ;
+
     @Autowired
     private CompanyDao companyDao;
 
@@ -25,35 +31,25 @@ public class TestCompanyDaoController {
 
     //Lister toutes les entreprises existantes
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Company> all() {
-        List<Company> list = companyDao.findAll("appuser.mail", "ASC");
-        return list;
+    public ModelAndView all() {
+        ModelAndView mav = new ModelAndView("company/companyList.html");
+        List<Company> list = companyServ.listOfUsers();
+        mav.addObject("companieslist", list);
+        return mav;
     }
 
-    /*
-     * Create a company with no joboffers
-     * ("denomination": "myFirstCompany",
-     * "description": "Desc of my new company",
-     * "mail":"mnc@imt.fr", "password":"2580", "city": "Brest")
-     */
-    @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company newCompany() {
-
-        AppUser appUser = new AppUser();
-        appUser.setMail("mgh@imt.fr");
-        appUser.setPassword("2580");
-        appUser.setCity("Brest");
-        appUserDao.persist(appUser);
-        //appUserDao.flush(); // Force l'enregistrement immédiat pour récupérer l'ID
-        
-        Company aNewCompany = new Company();
-        aNewCompany.setId(appUser.getId()); // Associer explicitement l'ID
-        aNewCompany.setAppuser(appUser);
-        aNewCompany.setDenomination("myFirstCompany");
-        aNewCompany.setDescription("Desc of my new company");
-
-        companyDao.persist(aNewCompany);
-        return aNewCompany;
+    // Affichage du form de création d'une nouvelle entreprise
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView PrintnewCompanyForm(){
+        ModelAndView mav = new ModelAndView("company/companyForm.html");
+        return mav;
+    }
+    
+    // Création des données d'une nouvelle entreprise
+    @RequestMapping(value = "/createdata", method = RequestMethod.GET)
+    public String newCompanyData(@RequestParam String mail, @RequestParam String password, @RequestParam String denomination, @RequestParam String description, @RequestParam String city) {
+        companyServ.addCompany(mail, password, denomination, description, city);
+        return "redirect:/companies";
     }
 
     // Get information of a company by id
