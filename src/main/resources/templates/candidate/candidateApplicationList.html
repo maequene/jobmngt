@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/company/companyBase :: article(~{::article})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/candidate/candidateBase :: article(~{::article})}">
 <article>
-    <h2>Job Offers management</h2>
+    <h2>Applications management</h2>
     <table class="table table-striped">
-        <caption>List of Job Offers</caption>
+        <caption>List of Applications</caption>
         <thead>
             <tr>
-                <th scope="col">Offer ID</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
+                <th scope="col">Application ID</th>
+                <th scope="col">CV</th>
+                <th scope="col">Application date</th>
                 <th scope="col">Sector</th>
                 <th scope="col">Qualification Level</th>
-                <th scope="col">Posting Date</th>
-                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="offer : ${company.joboffers}">
-                <td th:text="${offer.id}" />
-                <td th:text="${offer.title}" />
-                <td th:text="${offer.taskdescription}" />
+            <tr th:each="app : ${candidate.applications}">
+                <td th:text="${app.id}" />
+                <td th:text="${app.cv}" />
+                <td th:text="${app.appdate}" />
                 <td>
-                    <span th:each="sector, iterStat : ${offer.sectors}">
+                    <span th:each="sector, iterStat : ${app.sectors}">
                         <span th:text="${sector.label}"></span>
                         <span th:if="${!iterStat.last}">, </span> <!-- Ajoute une virgule sauf pour le dernier élément -->
                     </span>
                 </td>                
-                <td th:text="${offer.qualificationlevel.label}" />
-                <td th:text="${offer.publicationdate}" />
+                <td th:text="${app.qualificationlevel.label}" />
                 <td>
                     <!-- Link to edit offer -->
                     <a th:href="@{/offers/{offerId}/edit(offerId=${offer.id})}" class="btn btn-large btn-success" alt="Edit" title="edit offer">
@@ -44,7 +41,7 @@
     </table>
     <footer>
         <!-- Link to add a new offer -->
-        <a th:href="@{/offers/create}" class="btn btn-large btn-primary" title="add new offer">
+        <a th:href="@{/application/create}" class="btn btn-large btn-primary" title="add new offer">
             <i class="bi bi-plus"></i>
         </a>
         <p><br></p>

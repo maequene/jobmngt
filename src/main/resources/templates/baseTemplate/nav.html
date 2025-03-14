@@ -40,17 +40,11 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/companies}">Companies</a>
                     </li>
-                    <li class="nav-item" th:if="${session.user != null and session.usertype == 'company'}">
-                        <a class="nav-link" href="/companies/joboffers_viewcompany">Offer management</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/">Jobs</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/candidates">Candidates </a>
-                    </li>
-                    <li class="nav-item" th:if="${session.user != null and session.usertype == 'candidate'}">
-                        <a class="nav-link" href="/candidate/application_viewcandidate">Application management</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/">Applications</a>
@@ -60,6 +54,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/sectors}">Sectors</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.user != null and session.usertype == 'company'}">
+                        <a class="nav-link fw-bold" href="/companies/joboffers_viewcompany">Offer management</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.user != null and session.usertype == 'candidate'}">
+                        <a class="nav-link fw-bold" href="/candidates/application_viewcandidate">Application management</a>
                     </li>
 
                 </ul>

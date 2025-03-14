@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/company/companyBase :: article(~{::article})}">
 <article>
+    <h2>Job Offers management</h2>
     <table class="table table-striped">
         <caption>List of Job Offers</caption>
         <thead>
@@ -46,6 +47,7 @@
         <a th:href="@{/offers/create}" class="btn btn-large btn-primary" title="add new offer">
             <i class="bi bi-plus"></i>
         </a>
+        <p><br></p>
     </footer>
 </article>
 
