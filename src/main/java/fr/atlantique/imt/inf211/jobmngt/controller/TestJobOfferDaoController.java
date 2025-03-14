@@ -1,5 +1,7 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
@@ -21,13 +25,21 @@ import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
+import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
+
+import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = "/api/joboffer")
+@RequestMapping(value = "/joboffer")
 public class TestJobOfferDaoController {
 
     @Autowired
     private JobOfferDao JobOfferDao;
+
+    @Autowired
+    private JobOfferService jobOfferServ;
 
     @Autowired
     private CompanyDao companyDao;
@@ -39,36 +51,53 @@ public class TestJobOfferDaoController {
     private SectorDao sectorDao;
 
     // Lister toutes les offres d'emploi existantes
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JobOffer> getAllJobOffers() {
-        return JobOfferDao.findAll("title","ASC");  // Assurez-vous que findAll() est défini dans JobOfferDao
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ModelAndView all() {
+        ModelAndView mav = new ModelAndView("joboffer/jobofferList.html");
+        List<JobOffer> list = jobOfferServ.listOfJobOffer();
+        mav.addObject("jobofferlist", list);
+        return mav;
     }
 
-    // Create a job offer
-    @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JobOffer newJobOffer() {
-        Company company = companyDao.findById(40);
-        QualificationLevel qualificationLevel = qualificationLevelDao.findById(3);
-        Sector sector = sectorDao.findById(3);
-        Set<Sector> sectors = new HashSet<>();
-        sectors.add(sector);
-        
-        JobOffer joboffer = new JobOffer();
-        joboffer.setTitle("CDI fullstack dev");
-        joboffer.setTaskdescription("Développeur view.js++");
-        joboffer.setPublicationdate(new Date());
-        joboffer.setCompany(company);
-        joboffer.setQualificationlevel(qualificationLevel);
-        joboffer.setSectors(sectors);
-        JobOfferDao.persist(joboffer);
-        return joboffer;
+    // Affichage du form de création d'une nouvelle offre
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView PrintnewJobOfferForm(){
+        ModelAndView mav = new ModelAndView("joboffer/jobofferForm.html");
+        List<QualificationLevel> qualificationLevels = qualificationLevelDao.findAll("id", "ASC");
+        List<Sector> sectors = sectorDao.findAll("id", "ASC");
+        mav.addObject("qualificationLevels", qualificationLevels);
+        mav.addObject("sectors", sectors);
+        return mav;
     }
 
-    @RequestMapping(value = "/joboffers/sector/{sectorId}/qualification/{qualificationLevelId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    // Création des données d'une nouvelle entreprise
+    @RequestMapping(value = "/createdata", method = RequestMethod.GET)
+    public void newCompanyData(@RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        AppUser appUser = (AppUser) request.getSession().getAttribute("user");
+        if (appUser != null) {
+            Company company = companyDao.findById(appUser.getId());
+            jobOfferServ.addJobOffer(company, qualificationlevelid, title, taskdescription, sectors);
+            response.sendRedirect("/joboffer"); 
+        } else {
+            response.sendRedirect("/login");
+        }
+    }
+
+    //Affichage d'une offre par son ID
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView getJobOfferById(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("joboffer/jobofferView.html");
+        JobOffer jobOffer = JobOfferDao.findById(id);
+        mav.addObject("joboffer", jobOffer);
+        return mav;
+    }
+
+    @RequestMapping(value = "/joboffers/sector/{sectorId}/qualification/{qualificationLevelId}", method = RequestMethod.GET)
     public List<JobOffer> getJobOffersBySectorAndQualification(@PathVariable("sectorId") int sectorId, @PathVariable("qualificationLevelId") int qualificationLevelId) {
         return JobOfferDao.findBySectorAndQualification(sectorId, qualificationLevelId);
     }
 
+    /*
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public JobOffer updateJobOffer(@PathVariable int id) {
         // Récupérer l'offre d'emploi existante avec l'ID de l'offre d'emploi
@@ -80,5 +109,5 @@ public class TestJobOfferDaoController {
             JobOfferDao.merge(existingJobOffer);
         }
         return existingJobOffer;
-    }
+    }*/
  }
