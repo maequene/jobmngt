@@ -37,6 +37,7 @@ public class CompanyServiceImp implements CompanyService {
         aNewCompany.setId(appUser.getId()); // Associer explicitement l'ID
         aNewCompany.setDenomination(denomination);
         aNewCompany.setDescription(description);
+        appUser.setCompany(aNewCompany);
         companyDao.persist(aNewCompany);
     }
 

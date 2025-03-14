@@ -43,6 +43,7 @@ public class TestCandidateDaoController {
         aNewCandidate.setAppuser(appUser);
         aNewCandidate.setLastname("Mae");
         aNewCandidate.setFirstname("Quen");
+        appUser.setCandidate(aNewCandidate);
         
         candidateDao.persist(aNewCandidate);
         return aNewCandidate;
