@@ -47,7 +47,10 @@
                         <a class="nav-link" href="/">Jobs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Candidates </a>
+                        <a class="nav-link" href="/candidates">Candidates </a>
+                    </li>
+                    <li class="nav-item" th:if="${session.user != null and session.usertype == 'candidate'}">
+                        <a class="nav-link" href="/candidate/application_viewcandidate">Application management</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/">Applications</a>

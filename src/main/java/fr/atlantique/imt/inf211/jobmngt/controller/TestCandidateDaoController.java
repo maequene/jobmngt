@@ -4,74 +4,107 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
 
-import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
+import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
+import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
+import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
-@RestController
-@RequestMapping(value = "/api/candidates")
+@Controller
+@RequestMapping(value = "/candidates")
 public class TestCandidateDaoController {
-    
+    @Autowired
+    private CandidateService candidateServ;
+
     @Autowired
     private CandidateDao candidateDao;
 
     @Autowired
     private AppUserDao appUserDao;
 
-    //Lister tous les candidats existants 
-    @GetMapping
-    public List<Candidate> all() {
-        List<Candidate> list = candidateDao.findAll("lastname", "ASC");
-        return list;
+    //Lister tous les candidats existants
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ModelAndView all() {
+        ModelAndView mav = new ModelAndView("candidate/candidateList.html");
+        List<Candidate> list = candidateServ.listOfCandidate();
+        mav.addObject("candidateslist", list);
+        return mav;
     }
 
-    //Créer un nouveau candidat 
-    //curl -X GET "http://localhost:8080/api/candidates/create
-    @RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Candidate newCandidate() {
-        AppUser appUser = new AppUser();
-        appUser.setMail("mae@imt.fr");
-        appUser.setPassword("564");
-        appUser.setCity("Rennes");
-        appUserDao.persist(appUser);
-
-        Candidate aNewCandidate = new Candidate();
-        aNewCandidate.setId(appUser.getId()); // Associer explicitement l'ID
-        aNewCandidate.setAppuser(appUser);
-        aNewCandidate.setLastname("Mae");
-        aNewCandidate.setFirstname("Quen");
-        appUser.setCandidate(aNewCandidate);
-        
-        candidateDao.persist(aNewCandidate);
-        return aNewCandidate;
+    // Affichage du form de création d'un nouveau candidat
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView PrintnewCandidateForm(){
+        ModelAndView mav = new ModelAndView("candidate/candidateForm.html");
+        return mav;
+    }
+    
+    // Création des données d'un nouveau candidat
+    @RequestMapping(value = "/createdata", method = RequestMethod.GET)
+    public String newCandidateData(@RequestParam String mail, @RequestParam String password, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city) {
+        candidateServ.addCandidate(mail, password, firstname, lastname, city);
+        return "redirect:/candidates";
     }
 
     // Get information of a candidate by id
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Candidate one(@PathVariable int id) {
-        return candidateDao.findById(id);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView ShowCandidate(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("candidate/candidateView.html");
+        Candidate candidate = candidateServ.getCandidate(id);
+        mav.addObject("candidate", candidate);
+        return mav;
     }
 
+    @RequestMapping(value = "/application_viewcandidate", method = RequestMethod.GET)
+    public ModelAndView showCandidateApplication(HttpServletRequest request) {
+        // Récupère la session HTTP
+        HttpSession session = request.getSession();
+        
+        // Vérifie si l'utilisateur est connecté (s'il existe un attribut "user" dans la session)
+        AppUser appUser = (AppUser) session.getAttribute("user");
+        
+        if (appUser != null) {
+            // L'utilisateur est connecté, afficher la page des offres de l'entreprise
+            ModelAndView mav = new ModelAndView("candidate/candidateApplicationList.html");
+            Candidate candidate = candidateDao.findById(appUser.getId());
+            mav.addObject("candidate", candidate);
+            // Vous pouvez ajouter des objets au modèle ici si nécessaire (ex: offres d'entreprise)
+            return mav;
+        } else {
+            // L'utilisateur n'est pas connecté, rediriger vers la page d'accueil
+            return new ModelAndView("redirect:/");
+        }
+}
+
+
+    /* 
     // Modify information about a candidate
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Candidate replaceCandidate(@PathVariable int id) {
         Candidate candidate = candidateDao.findById(id);
         if (candidate != null) {
-            candidate.getAppuser().setMail("atlantique4576857@imt.fr");
+            candidate.getAppuser().setMail("atlantique@imt.fr");
             candidate.getAppuser().setPassword("5678");
-            candidate.getAppuser().setCity("Brest");
-            candidate.setLastname("Picaud");
-            candidate.setFirstname("Clement");
+            candidate.setFirstname("FIP");
+            candidate.setLastname("2A");
 
             return candidateDao.merge(candidate);
         }
         return null;
     }
 
-    // Delete a candidate by id
+    // Delete a candidate
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public void deleteCandidate(@PathVariable int id) {
         Candidate candidate = candidateDao.findById(id);
@@ -80,5 +113,5 @@ public class TestCandidateDaoController {
             candidateDao.remove(candidate);
             appUserDao.remove(appUser);
         }
-    }
+    }*/
 }

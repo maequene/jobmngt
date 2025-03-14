@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/candidate/candidateBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Candidate entry form</h2>
+    </header>
+    <!-- (${action}=='create')@{/companies/create}: @{/companies/${company.id}/edit}
+     "@{{action}==create? /companies/create : /companies/{id}/edit(id=${company.id},action=${action})}"
+     @{${action}=='create1'? /companies/create : /companies/{id}/edit(id=${company.id})}
+     -->
+    <form th:action="@{/candidates/createdata}" method="get">
+        <fieldset class="mb-3">
+            <label for="mail" class="form-label">Mail</label>:
+            <input type="text" id="mail" class="form-control" name="mail" autofocus="autofocus" required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="password" class="form-label">Password</label>:
+            <input type="password" id="password" class="form-control" name="password"  required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="firstname" class="form-label">Firstname</label>:
+            <input type="text" id="firstname" class="form-control" name="firstname" required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="lastname" class="form-label">Lastname</label>:
+            <input type="text" id="lastname" class="form-control" name="lastname" required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="cityid" class="form-label">City</label>:
+            <input type="text" id="cityid" class="form-control" name="city" required />
+        </fieldset>
+        <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
+        <a th:href="@{/candidates}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+    </form>
+</article>
+
+</html>
