@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/company/companyBase :: article(~{::article})}">
 <article>
     <table class="table table-striped">
-        <caption>List of companies</caption>
         <thead>
             <tr>
                 <th scope="col">Denomination</th>
@@ -22,13 +21,6 @@
                     <a th:href="@{companies/}+${comp.id}" alt="Company details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{/companies}" class="btn btn-large btn-success" alt="Edit" title="edit company">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-                    <a th:href="@{companies/{companyId}/delete(companyId=${comp.id})}" class="btn btn-large btn-danger delBtn"
-                        alt="Delete" title="delete company " data-id="@{companies/{companyId}/delete(companyId=${comp.id})}" th:attrappend="title=${' ' + comp.denomination}">
-                        <i class="bi bi-trash"></i>
-                    </a>
                 </td>
             </tr>
         </tbody>
@@ -37,6 +29,7 @@
         <a th:href="@{companies/create}" class="btn btn-large btn-primary" title="add new company">
             <i class="bi bi-plus"></i>
         </a>
+        <p><br></p>
 
     </footer>
 </article>

@@ -22,13 +22,6 @@
                     <a th:href="@{/candidates}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{/candidates}" class="btn btn-large btn-success" alt="Edit" title="edit candidate">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-                    <a th:href="@{candidates/{candidateId}/delete(candidateId=${cand.id})}" class="btn btn-large btn-danger delBtn"
-                        alt="Delete" title="delete candidate " data-id="@{candidates/{candidateId}/delete(candidateId=${cand.id})}" th:attrappend="title=${' ' + cand.firstname}">
-                        <i class="bi bi-trash"></i>
-                    </a>
                 </td>
             </tr>
         </tbody>
@@ -37,6 +30,7 @@
         <a th:href="@{candidates/create}" class="btn btn-large btn-primary" title="add new candidate">
             <i class="bi bi-plus"></i>
         </a>
+        <p><br></p>
 
     </footer>
 </article>
