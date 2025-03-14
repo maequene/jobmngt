@@ -7,7 +7,7 @@
     <form>
         <fieldset class="mb-3">
             <label for="nameid" class="form-label">Name</label>:
-            <input type="text" id="nameid" class="form-control" name="denomination" autofocus="autofocus"
+            <input type="text" id="nameid" class="form-control" name="denomination"
                 th:value="${company.denomination}" readonly />
         </fieldset>
         <fieldset class="mb-3">
@@ -47,8 +47,6 @@
 
 
     <footer>
-        <a th:href="@{/companies/{companyId}/edit(companyId=${company.id})}" class="btn btn-large btn-primary"
-            title="Unlock to update"><i class="bi bi-pencil"></i></a>
         <a th:href="@{/companies}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
         </footer>
 </article>

@@ -19,7 +19,7 @@
                 <td th:text="${cand.appuser.city}" />
                 <td th:text="${cand.applications.size()}" />
                 <td>
-                    <a th:href="@{/candidates}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
+                    <a th:href="@{candidates/}+${cand.id}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
                 </td>
