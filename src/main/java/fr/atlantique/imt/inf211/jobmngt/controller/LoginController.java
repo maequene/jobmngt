@@ -47,7 +47,7 @@ public class LoginController {
             if (appUser.getUserType().equals(AppUser.UserType.CANDIDATE)) {
                 session.setAttribute("usertype", "candidate");
                 session.setAttribute("uid", appUser.getId());
-                return new ModelAndView("redirect:/candidates");
+                return new ModelAndView("redirect:/candidates/application_viewcandidate");
             } else {
                 session.setAttribute("usertype", "company");
                 session.setAttribute("uid", appUser.getId());

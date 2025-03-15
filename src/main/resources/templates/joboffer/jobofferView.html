@@ -11,6 +11,11 @@
                 th:value="${joboffer.title}" readonly />
         </fieldset>
         <fieldset class="mb-3">
+            <label for="id" class="form-label">Offer ID</label>:
+            <input type="text" name ="id" class="form-control"
+                th:value="${joboffer.id}" readonly />
+        </fieldset>
+        <fieldset class="mb-3">
             <label for="taskdescription" class="form-label">Description</label>:
             <input type="text" class="form-control" name="taskdescription" th:value="${joboffer.taskdescription}"
                 readonly />

@@ -69,8 +69,8 @@ public class JobOfferDaoController {
         AppUser appUser = (AppUser) request.getSession().getAttribute("user");
         if (appUser != null) {
             Company company = companyServ.getCompany(appUser.getId());
-            jobOfferServ.addJobOffer(company, qualificationlevelid, title, taskdescription, sectors);
-            response.sendRedirect("/joboffer"); 
+            int id = jobOfferServ.addJobOffer(company, qualificationlevelid, title, taskdescription, sectors);
+            response.sendRedirect("/joboffer/" + id); 
         } else {
             response.sendRedirect("/login");
         }

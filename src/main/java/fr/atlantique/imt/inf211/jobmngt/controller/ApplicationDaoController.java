@@ -74,8 +74,8 @@ public class ApplicationDaoController {
         AppUser appUser = (AppUser) request.getSession().getAttribute("user");
         if (appUser != null) {
             Candidate candidate = candidateService.getCandidate(appUser.getId());
-            applicationServ.addApplication(candidate, qualificationlevelid, cv, sectors);
-            response.sendRedirect("/candidates/application_viewcandidate"); 
+            int id = applicationServ.addApplication(candidate, qualificationlevelid, cv, sectors);
+            response.sendRedirect("/application/" + id);
         } else {
             response.sendRedirect("/login");
         }

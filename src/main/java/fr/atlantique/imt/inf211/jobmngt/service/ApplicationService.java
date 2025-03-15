@@ -8,7 +8,7 @@ public interface ApplicationService {
 
     public List<Application> listOfApplication();
 
-    public void addApplication(Candidate candidate, int qualificationlevelid, String cv, List<Integer> sectors);
+    public int addApplication(Candidate candidate, int qualificationlevelid, String cv, List<Integer> sectors);
 
     public Application getApplicationById(Integer id);
     

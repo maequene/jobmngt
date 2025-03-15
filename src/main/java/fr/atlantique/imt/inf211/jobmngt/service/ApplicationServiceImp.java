@@ -34,7 +34,7 @@ public class ApplicationServiceImp implements ApplicationService {
     }
 
     @Transactional
-    public void addApplication(Candidate candidate, int qualificationlevelid, String cv, List<Integer> sectors){
+    public int addApplication(Candidate candidate, int qualificationlevelid, String cv, List<Integer> sectors){
         Application application = new Application();
         application.setCandidate(candidate);
         application.setQualificationlevel(qualificationLevelDao.findById(qualificationlevelid));
@@ -46,6 +46,7 @@ public class ApplicationServiceImp implements ApplicationService {
         application.setSectors(sectorSet);
         application.setAppdate(new java.util.Date());
         applicationDao.persist(application);
+        return application.getId();
     }
 
     @Transactional

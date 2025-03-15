@@ -34,7 +34,7 @@ public class JobOfferServiceImp implements JobOfferService {
     }
 
     @Transactional
-    public void addJobOffer(Company company, int qualificationlevelid, String title, String taskdescription, List<Integer> sectors){
+    public int addJobOffer(Company company, int qualificationlevelid, String title, String taskdescription, List<Integer> sectors){
         JobOffer joboffer = new JobOffer();
         joboffer.setCompany(company);
         joboffer.setQualificationlevel(qualificationLevelDao.findById(qualificationlevelid));
@@ -47,6 +47,7 @@ public class JobOfferServiceImp implements JobOfferService {
         joboffer.setSectors(sectorSet);
         joboffer.setPublicationdate(new java.util.Date());
         jobofferDao.persist(joboffer);
+        return joboffer.getId();
     }
 
     @Transactional
