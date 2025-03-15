@@ -46,5 +46,8 @@ public class CompanyServiceImp implements CompanyService {
         return companyDao.findById(id);
     }
 
+    public boolean emailExist(String mail) {
+        return AppUserDao.findByMail(mail).isEmpty();
+    }
 
 }

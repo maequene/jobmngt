@@ -10,5 +10,7 @@ public interface CompanyService {
     public void addCompany(String mail, String password, String denomination, String description, String city);
 
     public Company getCompany(Integer id);
+
+    public boolean emailExist(String mail);
     
 }

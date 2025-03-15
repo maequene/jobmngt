@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.stereotype.Controller;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
@@ -40,9 +41,14 @@ public class CompanyDaoController {
     
     // Création des données d'une nouvelle entreprise
     @RequestMapping(value = "/createdata", method = RequestMethod.GET)
-    public String newCompanyData(@RequestParam String mail, @RequestParam String password, @RequestParam String denomination, @RequestParam String description, @RequestParam String city) {
-        companyServ.addCompany(mail, password, denomination, description, city);
-        return "redirect:/companies";
+    public String newCompanyData(@RequestParam String mail, @RequestParam String password, @RequestParam String denomination, @RequestParam String description, @RequestParam String city, RedirectAttributes redirectAttributes) {
+        if (!companyServ.emailExist(mail)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Cette adresse e-mail est déjà utilisée.");
+            return "redirect:/companies/create"; // Redirige vers la page de création avec un message d'erreur
+        } else {
+            companyServ.addCompany(mail, password, denomination, description, city);
+            return "redirect:/companies";
+        }
     }
 
     // Get information of a company by id

@@ -48,5 +48,7 @@ public class CandidateServiceImp implements CandidateService {
         return candidateDao.findById(id);
     }
 
-
+    public boolean emailExist(String mail) {
+        return AppUserDao.findByMail(mail).isEmpty();
+    }
 }

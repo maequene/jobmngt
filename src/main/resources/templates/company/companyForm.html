@@ -8,6 +8,10 @@
      "@{{action}==create? /companies/create : /companies/{id}/edit(id=${company.id},action=${action})}"
      @{${action}=='create1'? /companies/create : /companies/{id}/edit(id=${company.id})}
      -->
+     <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    
     <form th:action="@{/companies/createdata}" method="get">
         <fieldset class="mb-3">
             <label for="mail" class="form-label">Mail</label>:

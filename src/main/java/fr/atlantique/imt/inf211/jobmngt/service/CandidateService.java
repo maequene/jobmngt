@@ -10,6 +10,8 @@ public interface CandidateService {
     public void addCandidate(String mail, String password, String firstname, String lastname, String city);
 
     public Candidate getCandidate(Integer id);
+
+    public boolean emailExist(String mail);
     
 }
 
