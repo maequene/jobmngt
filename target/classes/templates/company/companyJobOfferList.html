@@ -34,7 +34,7 @@
                         <i class="bi bi-pencil"></i>
                     </a>
                     <!-- Link to delete offer -->
-                    <a th:href="@{/offers/{offerId}/delete(offerId=${offer.id})}" class="btn btn-large btn-danger delBtn"
+                    <a th:href="@{/joboffer/delete/}+${offer.id}" class="btn btn-large btn-danger"
                         alt="Delete" title="delete offer" data-id="@{/offers/{offerId}/delete(offerId=${offer.id})}" th:attrappend="title=${' ' + offer.title}">
                         <i class="bi bi-trash"></i>
                     </a>

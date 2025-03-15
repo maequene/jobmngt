@@ -16,7 +16,6 @@ import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
-
 import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
 import fr.atlantique.imt.inf211.jobmngt.service.QualificationLevelService;
 import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
@@ -84,6 +83,15 @@ public class JobOfferDaoController {
         mav.addObject("joboffer", jobOffer);
         return mav;
     }
+
+    // Suppression d'une offre de job par son ID
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public void deleteJobOffer(@PathVariable int id, HttpServletResponse response) throws IOException {
+        JobOffer joboffer = jobOfferServ.getJobOfferById(id);
+        jobOfferServ.removeJoboffer(joboffer);
+        response.sendRedirect("/companies/joboffers_viewcompany");
+    }
+
     /*
     @RequestMapping(value = "/joboffers/sector/{sectorId}/qualification/{qualificationLevelId}", method = RequestMethod.GET)
     public List<JobOffer> getJobOffersBySectorAndQualification(@PathVariable("sectorId") int sectorId, @PathVariable("qualificationLevelId") int qualificationLevelId) {

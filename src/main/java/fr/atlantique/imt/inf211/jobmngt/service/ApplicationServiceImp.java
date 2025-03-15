@@ -54,5 +54,10 @@ public class ApplicationServiceImp implements ApplicationService {
         return applicationDao.findById(id);
     }
 
+    @Transactional
+    public void removeApplication(Application application) {
+        applicationDao.remove(application);
+    }
+
 
 }

@@ -11,6 +11,8 @@ public interface JobOfferService {
     public int addJobOffer(Company company, int qualificationlevelid, String title, String taskdescription, List<Integer> sectors);
 
     public JobOffer getJobOfferById(Integer id);
+
+    public void removeJoboffer(JobOffer joboffer);
     
 }
 

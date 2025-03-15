@@ -11,6 +11,8 @@ public interface ApplicationService {
     public int addApplication(Candidate candidate, int qualificationlevelid, String cv, List<Integer> sectors);
 
     public Application getApplicationById(Integer id);
+
+    public void removeApplication(Application application);
     
 }
 

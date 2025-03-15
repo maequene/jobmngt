@@ -96,6 +96,14 @@ public class ApplicationDaoController {
         return applicationDao.getApplicationsBySectorAndQualification(sectorId, qualificationLevelId);
     }
 
+    // Suppression d'une candidature par son ID
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public void deleteApplication(@PathVariable int id, HttpServletResponse response) throws IOException {
+        Application application = applicationServ.getApplicationById(id);
+        applicationServ.removeApplication(application);
+        response.sendRedirect("/candidates/application_viewcandidate");
+    }
+
     /*
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public JobOffer updateJobOffer(@PathVariable int id) {
