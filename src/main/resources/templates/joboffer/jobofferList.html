@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobofferBase :: article(~{::article})}">
 <article>
-    <h2>Job Offers management</h2>
     <table class="table table-striped">
         <caption>List of Job Offers</caption>
         <thead>
@@ -29,7 +28,7 @@
                 <td th:text="${offer.qualificationlevel.label}" />
                 <td th:text="${offer.publicationdate}" />
                 <td>
-                    <a th:href="@{joboffer/}+${offer.id}" alt="Company details" title="view details" class="btn btn-large btn-secondary">
+                    <a th:href="@{joboffer/}+${offer.id}" alt="Job Offer details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
                 </td>

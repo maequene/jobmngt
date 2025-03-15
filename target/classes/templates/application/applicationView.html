@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/application/applicationBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Application details</h2>
+    </header>
+    <form>
+        <fieldset class="mb-3">
+            <label for="cv" class="form-label">CV</label>:
+            <input type="text" name ="cv" class="form-control"
+                th:value="${application.cv}" readonly />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="candidate" class="form-label">Candidate</label>:
+            <!--<input type="text" class="form-control" name="candidate" th:value="|${application.candidate.firstname} ${application.candidate.lastname}|" readonly />-->
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="appdate" class="form-label">Application date</label>:
+            <input type="text" class="form-control" name="appdate" th:value="${application.appdate}" readonly />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="qualiflevel" class="form-label">Qualification level</label>:
+            <!--<input type="text" class="form-control" name="qualiflevel" th:value="${application.qualificationlevel.label}" readonly />-->
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="sectors" class="form-label">Sectors</label>:
+            <ul>
+                <li th:each="sector : ${application.sectors}" th:text="${sector.label}"></li>
+            </ul>
+        </fieldset>
+        
+        
+        
+    </form>
+
+    <footer>
+        <a th:href="@{/application}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+        <p><br></p>
+        </footer>
+</article>
+
+</html>

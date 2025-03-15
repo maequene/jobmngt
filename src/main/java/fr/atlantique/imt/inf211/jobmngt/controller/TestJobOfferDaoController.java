@@ -28,6 +28,9 @@ import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 
 import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
+import fr.atlantique.imt.inf211.jobmngt.service.QualificationLevelService;
+import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
+import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -36,7 +39,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class TestJobOfferDaoController {
 
     @Autowired
-    private JobOfferDao JobOfferDao;
+    private JobOfferService JobOfferServ;
 
     @Autowired
     private JobOfferService jobOfferServ;
@@ -45,7 +48,13 @@ public class TestJobOfferDaoController {
     private CompanyDao companyDao;
 
     @Autowired
-    private QualificationLevelDao qualificationLevelDao;
+    private CompanyService companyServ;
+
+    @Autowired
+    private QualificationLevelService qualificationLevelServ;
+
+    @Autowired
+    private SectorService sectorServ;
 
     @Autowired 
     private SectorDao sectorDao;
@@ -63,19 +72,19 @@ public class TestJobOfferDaoController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView PrintnewJobOfferForm(){
         ModelAndView mav = new ModelAndView("joboffer/jobofferForm.html");
-        List<QualificationLevel> qualificationLevels = qualificationLevelDao.findAll("id", "ASC");
-        List<Sector> sectors = sectorDao.findAll("id", "ASC");
+        List<QualificationLevel> qualificationLevels = qualificationLevelServ.listOfQualificationLevels();
+        List<Sector> sectors = sectorServ.listOfSectors();
         mav.addObject("qualificationLevels", qualificationLevels);
         mav.addObject("sectors", sectors);
         return mav;
     }
 
-    // Création des données d'une nouvelle entreprise
+    // Création des données d'une nouvelle offre
     @RequestMapping(value = "/createdata", method = RequestMethod.GET)
-    public void newCompanyData(@RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public void newJobOfferData(@RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
         AppUser appUser = (AppUser) request.getSession().getAttribute("user");
         if (appUser != null) {
-            Company company = companyDao.findById(appUser.getId());
+            Company company = companyServ.getCompany(appUser.getId());
             jobOfferServ.addJobOffer(company, qualificationlevelid, title, taskdescription, sectors);
             response.sendRedirect("/joboffer"); 
         } else {
@@ -87,17 +96,17 @@ public class TestJobOfferDaoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView getJobOfferById(@PathVariable int id) {
         ModelAndView mav = new ModelAndView("joboffer/jobofferView.html");
-        JobOffer jobOffer = JobOfferDao.findById(id);
+        JobOffer jobOffer = JobOfferServ.getJobOfferById(id);
         mav.addObject("joboffer", jobOffer);
         return mav;
     }
-
+    /*
     @RequestMapping(value = "/joboffers/sector/{sectorId}/qualification/{qualificationLevelId}", method = RequestMethod.GET)
     public List<JobOffer> getJobOffersBySectorAndQualification(@PathVariable("sectorId") int sectorId, @PathVariable("qualificationLevelId") int qualificationLevelId) {
         return JobOfferDao.findBySectorAndQualification(sectorId, qualificationLevelId);
     }
 
-    /*
+    /* 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public JobOffer updateJobOffer(@PathVariable int id) {
         // Récupérer l'offre d'emploi existante avec l'ID de l'offre d'emploi

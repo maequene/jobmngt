@@ -77,7 +77,7 @@ public class TestCandidateDaoController {
         if (appUser != null) {
             // L'utilisateur est connecté, afficher la page des offres de l'entreprise
             ModelAndView mav = new ModelAndView("candidate/candidateApplicationList.html");
-            Candidate candidate = candidateDao.findById(appUser.getId());
+            Candidate candidate = candidateServ.getCandidate(appUser.getId());
             mav.addObject("candidate", candidate);
             // Vous pouvez ajouter des objets au modèle ici si nécessaire (ex: offres d'entreprise)
             return mav;

@@ -27,12 +27,12 @@
                 <td th:text="${app.qualificationlevel.label}" />
                 <td>
                     <!-- Link to edit offer -->
-                    <a th:href="@{/offers/{offerId}/edit(offerId=${offer.id})}" class="btn btn-large btn-success" alt="Edit" title="edit offer">
+                    <a th:href="@{/candidates/application_viewcandidate}" class="btn btn-large btn-success delBtn" alt="Edit" title="edit offer">
                         <i class="bi bi-pencil"></i>
                     </a>
                     <!-- Link to delete offer -->
-                    <a th:href="@{/offers/{offerId}/delete(offerId=${offer.id})}" class="btn btn-large btn-danger delBtn"
-                        alt="Delete" title="delete offer" data-id="@{/offers/{offerId}/delete(offerId=${offer.id})}" th:attrappend="title=${' ' + offer.title}">
+                    <a th:href="@{/candidates/application_viewcandidate}" class="btn btn-large btn-danger delBtn"
+                        alt="Delete" title="delete offer">
                         <i class="bi bi-trash"></i>
                     </a>
                 </td>
@@ -41,7 +41,7 @@
     </table>
     <footer>
         <!-- Link to add a new offer -->
-        <a th:href="@{/application/create}" class="btn btn-large btn-primary" title="add new offer">
+        <a th:href="@{/application/create}" class="btn btn-large btn-primary" title="add new application">
             <i class="bi bi-plus"></i>
         </a>
         <p><br></p>

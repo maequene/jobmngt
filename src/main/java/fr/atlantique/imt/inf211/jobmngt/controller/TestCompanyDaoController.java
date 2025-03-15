@@ -74,7 +74,7 @@ public class TestCompanyDaoController {
         if (appUser != null) {
             // L'utilisateur est connecté, afficher la page des offres de l'entreprise
             ModelAndView mav = new ModelAndView("company/companyJobOfferList.html");
-            Company company = companyDao.findById(appUser.getId());
+            Company company = companyServ.getCompany(appUser.getId());
             mav.addObject("company", company);
             // Vous pouvez ajouter des objets au modèle ici si nécessaire (ex: offres d'entreprise)
             return mav;
