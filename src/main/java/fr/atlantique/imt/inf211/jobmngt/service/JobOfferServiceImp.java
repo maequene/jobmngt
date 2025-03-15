@@ -1,5 +1,6 @@
 package fr.atlantique.imt.inf211.jobmngt.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -62,8 +63,14 @@ public class JobOfferServiceImp implements JobOfferService {
     }
 
     @Transactional
-    public List<JobOffer> getJobOffersBySectorAndQualification (int sectorid, int qualificationlevelid) {
-        return jobofferDao.findBySectorAndQualification(sectorid, qualificationlevelid);
+    public List<JobOffer> findJobOffersBySectorsAndQualification (Set<Sector> sectors, int qualificationlevelid) {
+        List<JobOffer> joboffers = new ArrayList<>();
+        for (Sector sector : sectors) {
+            List<JobOffer> sectorJoboffers = jobofferDao.findBySectorAndQualification(sector.getId(), qualificationlevelid);
+            for (JobOffer joboffer : sectorJoboffers) {
+                joboffers.add(joboffer);
+            }
+        }
+        return joboffers;
     }
-
 }

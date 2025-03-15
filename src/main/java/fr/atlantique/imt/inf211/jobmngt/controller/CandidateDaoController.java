@@ -13,15 +13,26 @@ import org.springframework.stereotype.Controller;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
+import fr.atlantique.imt.inf211.jobmngt.entity.Application;
+import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
+import fr.atlantique.imt.inf211.jobmngt.service.ApplicationService;
+import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/candidates")
 public class CandidateDaoController {
+
     @Autowired
     private CandidateService candidateServ;
+
+    @Autowired
+    private ApplicationService applicationServ;
+
+    @Autowired
+    private JobOfferService jobofferServ;
 
     //Lister tous les candidats existants
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -79,6 +90,18 @@ public class CandidateDaoController {
             // L'utilisateur n'est pas connecté, rediriger vers la page d'accueil
             return new ModelAndView("redirect:/");
         }
+    }
+
+    //Mise en correspondance une offre d'emploi avec une application
+    @RequestMapping(value = "/application-joboffer/{application_id}", method = RequestMethod.GET)
+    public ModelAndView matchApplicationWithJobOffer(@PathVariable int application_id) {
+        ModelAndView mav = new ModelAndView("candidate/candidateApplication-JobOffer.html");
+        Application application = applicationServ.getApplicationById(application_id);
+        List<JobOffer> joboffers = jobofferServ.findJobOffersBySectorsAndQualification(application.getSectors(), application.getQualificationlevel().getId());
+        mav.addObject("appli", application);
+        mav.addObject("JobOffers", joboffers);
+        return mav;
+    }
 }
 
 
@@ -108,4 +131,3 @@ public class CandidateDaoController {
             appUserDao.remove(appUser);
         }
     }*/
-}
