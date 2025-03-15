@@ -1,8 +1,11 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
 import java.util.List;
+import java.util.logging.Level;
 
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,17 +14,31 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.stereotype.Controller;
 
+import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
+import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
+import fr.atlantique.imt.inf211.jobmngt.entity.Application;
+import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
 import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
+import fr.atlantique.imt.inf211.jobmngt.service.ApplicationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/companies")
 public class CompanyDaoController {
+
+     private static final Logger logger = Logger.getLogger(CompanyDaoController.class.getName());
+
     @Autowired
     private CompanyService companyServ;
+
+    @Autowired
+    private JobOfferService jobofferServ;
+
+    @Autowired
+    private ApplicationService applicationServ;
 
     //Lister toutes les entreprises existantes
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -79,7 +96,19 @@ public class CompanyDaoController {
             // L'utilisateur n'est pas connecté, rediriger vers la page d'accueil
             return new ModelAndView("redirect:/");
         }
-}
+    }
+
+    //Mise en correspondance une offre d'emploi avec une application
+    @RequestMapping(value = "/joboffer-candidate/{joboffer_id}", method = RequestMethod.GET)
+    public ModelAndView matchJobOfferWithCandidate(@PathVariable int joboffer_id) {
+        ModelAndView mav = new ModelAndView("company/companyJobOffer-Application.html");
+        JobOffer JobOffer = jobofferServ.getJobOfferById(joboffer_id);
+        List<Application> applis = applicationServ.findApplicationsBySectorsandQualificationLevel(JobOffer.getSectors(), JobOffer.getQualificationlevel().getId());
+        //logger.log(Level.INFO, "getting Application instance with id: {0}", applis.get(0).getCv());
+        mav.addObject("joboffer", JobOffer);
+        mav.addObject("Applications", applis);
+        return mav;
+    }
 
 
     /* 

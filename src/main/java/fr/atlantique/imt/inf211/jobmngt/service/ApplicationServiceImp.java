@@ -1,5 +1,6 @@
 package fr.atlantique.imt.inf211.jobmngt.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,5 +60,15 @@ public class ApplicationServiceImp implements ApplicationService {
         applicationDao.remove(application);
     }
 
-
+    @Transactional
+    public List<Application> findApplicationsBySectorsandQualificationLevel(Set<Sector> sectors, int qualificationlevelid) {
+        List<Application> applications = new ArrayList<>();
+        for (Sector sector : sectors) {
+            List<Application> sectorApplications = applicationDao.getApplicationsBySectorAndQualification(sector.getId(), qualificationlevelid);
+            for (Application application : sectorApplications) {
+                applications.add(application);
+            }
+        }
+        return applications;
+    }
 }

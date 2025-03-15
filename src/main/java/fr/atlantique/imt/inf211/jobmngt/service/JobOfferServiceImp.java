@@ -61,4 +61,9 @@ public class JobOfferServiceImp implements JobOfferService {
         jobofferDao.remove(joboffer);
     }
 
+    @Transactional
+    public List<JobOffer> getJobOffersBySectorAndQualification (int sectorid, int qualificationlevelid) {
+        return jobofferDao.findBySectorAndQualification(sectorid, qualificationlevelid);
+    }
+
 }
