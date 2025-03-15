@@ -4,16 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
-import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
-import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
-import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import jakarta.transaction.Transactional;
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.SectorDao;
@@ -26,16 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class JobOfferServiceImp implements JobOfferService {
 
     @Autowired
-    private CandidateDao candidateDao;
-
-    @Autowired
-    private AppUserDao AppUserDao;
-
-    @Autowired
     private JobOfferDao jobofferDao;
-
-    @Autowired
-    private CompanyDao companyDao;
 
     @Autowired
     private QualificationLevelDao qualificationLevelDao;

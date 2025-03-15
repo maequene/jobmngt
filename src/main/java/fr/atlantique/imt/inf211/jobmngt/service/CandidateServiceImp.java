@@ -3,10 +3,8 @@ package fr.atlantique.imt.inf211.jobmngt.service;
 import java.util.List;
 import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
-import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import jakarta.transaction.Transactional;
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
 
 import org.springframework.stereotype.Component;

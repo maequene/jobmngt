@@ -8,28 +8,26 @@
         <fieldset class="mb-3">
             <label for="cv" class="form-label">CV</label>:
             <input type="text" name ="cv" class="form-control"
-                th:value="${application.cv}" readonly />
+                th:value="${applic.cv}" readonly />
         </fieldset>
         <fieldset class="mb-3">
             <label for="candidate" class="form-label">Candidate</label>:
-            <!--<input type="text" class="form-control" name="candidate" th:value="|${application.candidate.firstname} ${application.candidate.lastname}|" readonly />-->
+            <input type="text" class="form-control" name="candidate" th:value="|${applic.candidate.firstname} ${applic.candidate.lastname}|" readonly />
         </fieldset>
         <fieldset class="mb-3">
             <label for="appdate" class="form-label">Application date</label>:
-            <input type="text" class="form-control" name="appdate" th:value="${application.appdate}" readonly />
+            <input type="text" class="form-control" name="appdate" th:value="${applic.appdate}" readonly />
         </fieldset>
         <fieldset class="mb-3">
             <label for="qualiflevel" class="form-label">Qualification level</label>:
-            <!--<input type="text" class="form-control" name="qualiflevel" th:value="${application.qualificationlevel.label}" readonly />-->
+            <input type="text" class="form-control" name="qualiflevel" th:value="${applic.qualificationlevel.label}" readonly />
         </fieldset>
         <fieldset class="mb-3">
             <label for="sectors" class="form-label">Sectors</label>:
             <ul>
-                <li th:each="sector : ${application.sectors}" th:text="${sector.label}"></li>
+                <li th:each="sector : ${applic.sectors}" th:text="${sector.label}"></li>
             </ul>
         </fieldset>
-        
-        
         
     </form>
 

@@ -1,15 +1,11 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,14 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.SectorDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
-import fr.atlantique.imt.inf211.jobmngt.entity.Company;
-import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
@@ -32,33 +21,32 @@ import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 
 import fr.atlantique.imt.inf211.jobmngt.service.ApplicationService;
+import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
+import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
+import fr.atlantique.imt.inf211.jobmngt.service.QualificationLevelService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/application")
-public class TestApplicationDaoController {
+public class ApplicationDaoController {
 
-    @Autowired
-    private JobOfferDao JobOfferDao;
+    private static final Logger logger = Logger.getLogger(ApplicationDaoController.class.getName());
 
     @Autowired
     private ApplicationService applicationServ;
 
     @Autowired
-    private CompanyDao companyDao;
-
-    @Autowired
     private ApplicationDao applicationDao;
 
     @Autowired
-    private CandidateDao candidateDao;
+    private SectorService sectorServ;
 
     @Autowired
-    private QualificationLevelDao qualificationLevelDao;
+    private QualificationLevelService qualificationLevelServ;
 
-    @Autowired 
-    private SectorDao sectorDao;
+    @Autowired
+    private CandidateService candidateService;
 
     // Lister toutes les candidatures existantes
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -73,8 +61,8 @@ public class TestApplicationDaoController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView PrintnewApplicationForm(){
         ModelAndView mav = new ModelAndView("application/applicationForm.html");
-        List<QualificationLevel> qualificationLevels = qualificationLevelDao.findAll("id", "ASC");
-        List<Sector> sectors = sectorDao.findAll("id", "ASC");
+        List<QualificationLevel> qualificationLevels = qualificationLevelServ.listOfQualificationLevels();
+        List<Sector> sectors = sectorServ.listOfSectors();
         mav.addObject("qualificationLevels", qualificationLevels);
         mav.addObject("sectors", sectors);
         return mav;
@@ -85,7 +73,7 @@ public class TestApplicationDaoController {
     public void newApplicationData(@RequestParam int qualificationlevelid, @RequestParam String cv, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
         AppUser appUser = (AppUser) request.getSession().getAttribute("user");
         if (appUser != null) {
-            Candidate candidate = candidateDao.findById(appUser.getId());
+            Candidate candidate = candidateService.getCandidate(appUser.getId());
             applicationServ.addApplication(candidate, qualificationlevelid, cv, sectors);
             response.sendRedirect("/candidates/application_viewcandidate"); 
         } else {
@@ -97,8 +85,9 @@ public class TestApplicationDaoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView getApplicationById(@PathVariable int id) {
         ModelAndView mav = new ModelAndView("application/applicationView.html");
-        Application application = applicationDao.findById(id);
-        mav.addObject("application", application);
+        Application appli = applicationServ.getApplicationById(id);
+        logger.log(Level.INFO, "Recuperation de la candidature avec le CV: {0}", appli.getCv());
+        mav.addObject("applic", appli);
         return mav;
     }
 

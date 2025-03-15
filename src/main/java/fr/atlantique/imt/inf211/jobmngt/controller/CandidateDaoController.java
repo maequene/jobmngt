@@ -3,7 +3,6 @@ package fr.atlantique.imt.inf211.jobmngt.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,28 +10,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
 
-import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
-import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
-import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/candidates")
-public class TestCandidateDaoController {
+public class CandidateDaoController {
     @Autowired
     private CandidateService candidateServ;
-
-    @Autowired
-    private CandidateDao candidateDao;
-
-    @Autowired
-    private AppUserDao appUserDao;
 
     //Lister tous les candidats existants
     @RequestMapping(value = "", method = RequestMethod.GET)

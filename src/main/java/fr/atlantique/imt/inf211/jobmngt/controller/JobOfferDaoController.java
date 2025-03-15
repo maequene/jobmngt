@@ -1,15 +1,9 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,10 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.JobOfferDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.SectorDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
@@ -36,16 +26,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/joboffer")
-public class TestJobOfferDaoController {
+public class JobOfferDaoController {
 
     @Autowired
     private JobOfferService JobOfferServ;
 
     @Autowired
     private JobOfferService jobOfferServ;
-
-    @Autowired
-    private CompanyDao companyDao;
 
     @Autowired
     private CompanyService companyServ;
@@ -55,9 +42,6 @@ public class TestJobOfferDaoController {
 
     @Autowired
     private SectorService sectorServ;
-
-    @Autowired 
-    private SectorDao sectorDao;
 
     // Lister toutes les offres d'emploi existantes
     @RequestMapping(value = "", method = RequestMethod.GET)

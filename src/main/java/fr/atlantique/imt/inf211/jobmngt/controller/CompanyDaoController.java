@@ -3,7 +3,6 @@ package fr.atlantique.imt.inf211.jobmngt.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
 
-import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
@@ -21,15 +18,9 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/companies")
-public class TestCompanyDaoController {
+public class CompanyDaoController {
     @Autowired
     private CompanyService companyServ;
-
-    @Autowired
-    private CompanyDao companyDao;
-
-    @Autowired
-    private AppUserDao appUserDao;
 
     //Lister toutes les entreprises existantes
     @RequestMapping(value = "", method = RequestMethod.GET)
