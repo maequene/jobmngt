@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobofferBase :: article(~{::article})}">
+<article>
+    <table class="table table-striped">
+        <caption>List of Job Offers</caption>
+        <thead>
+            <tr>
+                <th scope="col">Offer ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Company</th>
+                <th scope="col">Sector</th>
+                <th scope="col">Qualification Level</th>
+                <th scope="col">Posting Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="offer : ${jobofferlist}">
+                <td th:text="${offer.id}" />
+                <td th:text="${offer.title}" />
+                <td th:text="${offer.company.denomination}" />
+                <td>
+                    <span th:each="sector, iterStat : ${offer.sectors}">
+                        <span th:text="${sector.label}"></span>
+                        <span th:if="${!iterStat.last}">, </span> <!-- Ajoute une virgule sauf pour le dernier élément -->
+                    </span>
+                </td>                
+                <td th:text="${offer.qualificationlevel.label}" />
+                <td th:text="${offer.publicationdate}" />
+                <td>
+                    <a th:href="@{joboffer/}+${offer.id}" alt="Job Offer details" title="view details" class="btn btn-large btn-secondary">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <footer>
+        <p><br></p>
+    </footer>
+</article>
+
+</html>

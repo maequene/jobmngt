@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/company/companyBase :: article(~{::article})}">
+<article>
+    <h2>Job Offers management</h2>
+    <table class="table table-striped">
+        <caption>List of Job Offers</caption>
+        <thead>
+            <tr>
+                <th scope="col">Offer ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Sector</th>
+                <th scope="col">Qualification Level</th>
+                <th scope="col">Posting Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="offer : ${company.joboffers}">
+                <td th:text="${offer.id}" />
+                <td th:text="${offer.title}" />
+                <td th:text="${offer.taskdescription}" />
+                <td>
+                    <span th:each="sector, iterStat : ${offer.sectors}">
+                        <span th:text="${sector.label}"></span>
+                        <span th:if="${!iterStat.last}">, </span> <!-- Ajoute une virgule sauf pour le dernier élément -->
+                    </span>
+                </td>                
+                <td th:text="${offer.qualificationlevel.label}" />
+                <td th:text="${offer.publicationdate}" />
+                <td>
+                    <!-- Link to detail offer -->
+                    <a th:href="@{/companies/joboffer-candidate/}+${offer.id}" class="btn btn-large btn-success" alt="Edit" title="edit offer">
+                        <i class="bi bi-info-circle"></i>
+                    </a>
+                    <!-- Link to delete offer -->
+                    <a th:href="@{/joboffer/delete/}+${offer.id}" class="btn btn-large btn-danger mt-1"
+                        alt="Delete" title="delete offer" data-id="@{/offers/{offerId}/delete(offerId=${offer.id})}" th:attrappend="title=${' ' + offer.title}">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <footer>
+        <!-- Link to add a new offer -->
+        <a th:href="@{/joboffer/create}" class="btn btn-large btn-primary" title="add new offer">
+            <i class="bi bi-plus"></i>
+        </a>
+        <p><br></p>
+    </footer>
+</article>
+
+</html>

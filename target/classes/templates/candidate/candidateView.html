@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/candidate/candidateBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Candidate details</h2>
+    </header>
+    <form>
+        <fieldset class="mb-3">
+            <label for="firstname" class="form-label">First name</label>:
+            <input type="text" id="firstname" class="form-control" name="firstname" th:value="${candidate.firstname}" readonly />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="lastname" class="form-label">Last name</label>:
+            <input type="text" id="lastname" class="form-control" name="lastname" th:value="${candidate.lastname}"
+                readonly />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="mail" class="form-label">Mail</label>:
+            <input type="text" id="mail" class="form-control" name="mail" th:value="${candidate.appuser.mail}" readonly />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="cityid" class="form-label">City</label>:
+            <input type="text" id="cityid" class="form-control" name="city" th:value="${candidate.appuser.city}" readonly />
+        </fieldset>
+    </form>
+
+    <aside th:if="${#lists.size(candidate.applications)} > 0">
+        <h2>List of associated applications</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">CV</th>
+                    <th scope="col">Application date</th>
+                    <th scope="col">Qualification level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="app : ${candidate.applications}">
+                    <th scope="row" th:text="${app.id}" />
+                    <td th:text="${app.cv}" />
+                    <td th:text="${app.appdate}" />
+                    <td th:text="${app.qualificationlevel.label}" />
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+
+
+    <footer>
+        <a th:href="@{/candidates}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+        <p><br></p>
+        </footer>
+</article>
+
+</html>

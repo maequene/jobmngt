@@ -119,7 +119,7 @@ public class AppUser  implements java.io.Serializable {
     }
 
     public void setUserType(UserType userType) {
-        // do nothing
+        
     }
 
     @Transient

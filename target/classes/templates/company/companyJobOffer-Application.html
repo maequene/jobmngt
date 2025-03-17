@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/joboffer/jobofferBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Job Offer details</h2>
+    </header>
+    <form>
+        <fieldset class="mb-3">
+            <label for="title" class="form-label">Title</label>:
+            <input type="text" name ="title" class="form-control"
+                th:value="${joboffer.title}" readonly />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="taskdescription" class="form-label">Description</label>:
+            <input type="text" class="form-control" name="taskdescription" th:value="${joboffer.taskdescription}"
+                readonly />
+        </fieldset>
+    </form>
+
+    <aside>
+        <h2>List of associated applications</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Candidate's last name</th>
+                    <th scope="col">Candidate's first name</th>
+                    <th scope="col">View Candidate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:if="${#lists.size(Applications) > 0}">
+                    <tr th:each="app : ${Applications}">
+                        <td th:text="${app.candidate.lastname}" />
+                        <td th:text="${app.candidate.firstname}" />
+                        <td>
+                            <a th:href="@{/candidates/} + ${app.candidate.id}" alt="Candidate details" title="view details" class="btn btn-large btn-secondary">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
+            
+                <th:block th:if="${#lists.isEmpty(Applications)}">
+                    <tr>
+                        <td colspan="3" class="text-center">No applications found.</td>
+                    </tr>
+                </th:block>
+            </tbody>
+            
+        </table>
+    </aside>
+
+
+    <footer>
+        <a th:href="@{/companies/joboffers_viewcompany}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+        <p><br></p>
+        </footer>
+</article>
+
+</html>

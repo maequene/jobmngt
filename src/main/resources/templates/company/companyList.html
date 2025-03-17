@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/company/companyBase :: article(~{::article})}">
 <article>
-    <p th:if="${#lists.size(companieslist)} == 0">No company registered yet.</p>
-    <table class="table table-striped" th:if="${#lists.size(companieslist)} > 0">
-        <caption>List of companies (<span th:text="${companieslist.size}"></span>)</caption>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Denomination</th>
@@ -17,18 +15,11 @@
             <tr th:each="comp : ${companieslist}">
                  <td th:text="${comp.denomination}" />
                 <td th:text="${comp.description}" />
-                <td th:text="${comp.city}" />
+                <td th:text="${comp.appuser.city}" />
                 <td th:text="${comp.joboffers.size()}" />
                 <td>
                     <a th:href="@{companies/}+${comp.id}" alt="Company details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
-                    </a>
-                    <a th:href="@{companies/{companyId}/edit(companyId=${comp.id})}" class="btn btn-large btn-success" alt="Edit" title="edit company">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-                    <a th:href="@{companies/{companyId}/delete(companyId=${comp.id})}" class="btn btn-large btn-danger delBtn"
-                        alt="Delete" title="delete company " data-id="@{companies/{companyId}/delete(companyId=${comp.id})}" th:attrappend="title=${' ' + comp.denomination}">
-                        <i class="bi bi-trash"></i>
                     </a>
                 </td>
             </tr>
@@ -38,6 +29,7 @@
         <a th:href="@{companies/create}" class="btn btn-large btn-primary" title="add new company">
             <i class="bi bi-plus"></i>
         </a>
+        <p><br></p>
 
     </footer>
 </article>
