@@ -113,7 +113,7 @@ public class CompanyController {
     public void deleteCompany(HttpServletResponse response, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
         AppUser appuser = (AppUser) session.getAttribute("user");
-        appuserServ.removeAppUser(appuser);
+        appuserServ.removeAppUserCompany(appuser);
         response.sendRedirect("/logout");
     }
 

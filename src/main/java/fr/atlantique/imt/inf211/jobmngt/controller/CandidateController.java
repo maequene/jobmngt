@@ -1,5 +1,6 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,11 @@ import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
 import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
+import fr.atlantique.imt.inf211.jobmngt.service.AppUserService;
 import fr.atlantique.imt.inf211.jobmngt.service.ApplicationService;
 import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -27,6 +30,9 @@ public class CandidateController {
 
     @Autowired
     private CandidateService candidateServ;
+
+    @Autowired
+    private AppUserService appuserServ;
 
     @Autowired
     private ApplicationService applicationServ;
@@ -101,6 +107,15 @@ public class CandidateController {
         mav.addObject("appli", application);
         mav.addObject("JobOffers", joboffers);
         return mav;
+    }
+
+    // Suppression d'une company
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public void deleteCandidate(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession();
+        AppUser appuser = (AppUser) session.getAttribute("user");
+        appuserServ.removeAppUserCandidate(appuser);
+        response.sendRedirect("/logout");
     }
 }
 

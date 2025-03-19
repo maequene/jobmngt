@@ -14,5 +14,7 @@ public interface AppUserService {
 
     public Optional<AppUser> checkLogin(AppUser u);
 
-    public void removeAppUser(AppUser u);
+    public void removeAppUserCompany(AppUser u);
+
+    public void removeAppUserCandidate(AppUser u);
 }
