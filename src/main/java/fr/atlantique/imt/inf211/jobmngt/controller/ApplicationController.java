@@ -29,9 +29,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/application")
-public class ApplicationDaoController {
+public class ApplicationController {
 
-    private static final Logger logger = Logger.getLogger(ApplicationDaoController.class.getName());
+    private static final Logger logger = Logger.getLogger(ApplicationController.class.getName());
 
     @Autowired
     private ApplicationService applicationServ;

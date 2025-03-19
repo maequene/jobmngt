@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/joboffer")
-public class JobOfferDaoController {
+public class JobOfferController {
 
     @Autowired
     private JobOfferService JobOfferServ;

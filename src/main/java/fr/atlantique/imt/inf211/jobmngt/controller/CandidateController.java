@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/candidates")
-public class CandidateDaoController {
+public class CandidateController {
 
     @Autowired
     private CandidateService candidateServ;

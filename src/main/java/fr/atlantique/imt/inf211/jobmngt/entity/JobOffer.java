@@ -77,7 +77,7 @@ public class JobOffer  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="compid", nullable=false)
     public Company getCompany() {
         return this.company;

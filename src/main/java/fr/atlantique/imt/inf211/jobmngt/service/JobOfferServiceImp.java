@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.Sector;

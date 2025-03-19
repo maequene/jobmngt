@@ -13,4 +13,6 @@ public interface AppUserService {
     public Long nbUsers();
 
     public Optional<AppUser> checkLogin(AppUser u);
+
+    public void removeAppUser(AppUser u);
 }

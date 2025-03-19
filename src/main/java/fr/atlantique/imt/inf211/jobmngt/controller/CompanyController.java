@@ -1,5 +1,6 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,15 +18,20 @@ import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
 import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
 import fr.atlantique.imt.inf211.jobmngt.service.ApplicationService;
+import fr.atlantique.imt.inf211.jobmngt.service.AppUserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/companies")
-public class CompanyDaoController {
+public class CompanyController {
 
     @Autowired
     private CompanyService companyServ;
+
+    @Autowired
+    private AppUserService appuserServ;
 
     @Autowired
     private JobOfferService jobofferServ;
@@ -100,6 +106,15 @@ public class CompanyDaoController {
         mav.addObject("joboffer", JobOffer);
         mav.addObject("Applications", applis);
         return mav;
+    }
+
+    // Suppression d'une company
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public void deleteCompany(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession();
+        AppUser appuser = (AppUser) session.getAttribute("user");
+        appuserServ.removeAppUser(appuser);
+        response.sendRedirect("/logout");
     }
 
 
