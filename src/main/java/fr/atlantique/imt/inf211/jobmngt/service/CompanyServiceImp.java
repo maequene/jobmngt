@@ -4,7 +4,6 @@ import java.util.List;
 import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
-import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import jakarta.transaction.Transactional;
 import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 
@@ -49,12 +48,6 @@ public class CompanyServiceImp implements CompanyService {
 
     public boolean emailExist(String mail) {
         return AppUserDao.findByMail(mail).isEmpty();
-    }
-
-    @Transactional
-    public void removeCompany(Company company, AppUser appUser) {
-        companyDao.remove(company);
-        AppUserDao.remove(appUser);
     }
 
 }

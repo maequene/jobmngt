@@ -73,5 +73,4 @@ public class AppUserServiceImpl implements AppUserService {
         candidatedao.remove(appuser_db.getCandidate());
         appUserDao.remove(appuser_db);
     }
-
 }
