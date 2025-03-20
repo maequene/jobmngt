@@ -36,6 +36,7 @@ public class Company  implements java.io.Serializable {
      private AppUser appuser;
      private String denomination;
      private String description;
+     private String city;
      private Set<JobOffer> joboffers = new HashSet<>(0);
 
     public Company() {
@@ -91,6 +92,15 @@ public class Company  implements java.io.Serializable {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Column(name="city", length=100)
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="company", cascade = CascadeType.ALL, orphanRemoval = true)

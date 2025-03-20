@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
 import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
-import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
+import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
 import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
 import fr.atlantique.imt.inf211.jobmngt.service.QualificationLevelService;
 import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
-import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -92,23 +92,24 @@ public class JobOfferDaoController {
         response.sendRedirect("/companies/joboffers_viewcompany");
     }
 
-    /*
-    @RequestMapping(value = "/joboffers/sector/{sectorId}/qualification/{qualificationLevelId}", method = RequestMethod.GET)
-    public List<JobOffer> getJobOffersBySectorAndQualification(@PathVariable("sectorId") int sectorId, @PathVariable("qualificationLevelId") int qualificationLevelId) {
-        return JobOfferDao.findBySectorAndQualification(sectorId, qualificationLevelId);
+    // Afficher le formulaire avec les valeurs existantes
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView showUpdateForm(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("company/companyJobOffer-Update.html");
+        JobOffer jobOffer = JobOfferServ.getJobOfferById(id);
+        mav.addObject("joboffer", jobOffer);
+        List<QualificationLevel> qualificationLevels = qualificationLevelServ.listOfQualificationLevels();
+        List<Sector> sectors = sectorServ.listOfSectors();
+        mav.addObject("qualificationLevels", qualificationLevels);
+        mav.addObject("sectors", sectors);
+        return mav;
     }
 
-    /* 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JobOffer updateJobOffer(@PathVariable int id) {
-        // Récupérer l'offre d'emploi existante avec l'ID de l'offre d'emploi
-        JobOffer existingJobOffer = JobOfferDao.findById(id);
-        if (existingJobOffer != null) {
-            existingJobOffer.setTitle("Développeur Java Fullstack");
-            existingJobOffer.setTaskdescription("Développement Java Fullstack en agile");
-            existingJobOffer.setPublicationdate(new Date());
-            JobOfferDao.merge(existingJobOffer);
-        }
-        return existingJobOffer;
-    }*/
- }
+    // Mise à jour des données d'une offre d'emploi
+    @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
+    public void updateJobOffer(@PathVariable int id, @RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletResponse request, HttpServletResponse response) throws IOException {
+        JobOffer existingJobOffer = JobOfferServ.getJobOfferById(id);
+        jobOfferServ.updateJobOffer(existingJobOffer, qualificationlevelid, title, taskdescription, sectors);
+        response.sendRedirect("/companies/joboffers_viewcompany");
+    }
+}

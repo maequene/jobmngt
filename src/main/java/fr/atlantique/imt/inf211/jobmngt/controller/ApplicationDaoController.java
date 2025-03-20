@@ -14,16 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
-import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
-import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
-
+import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
+import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
 import fr.atlantique.imt.inf211.jobmngt.service.ApplicationService;
 import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
-import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
 import fr.atlantique.imt.inf211.jobmngt.service.QualificationLevelService;
+import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -117,4 +116,29 @@ public class ApplicationDaoController {
         }
         return existingJobOffer;
     }*/
- }
+
+    // Afficher le formulaire avec les valeurs existantes
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView showUpdateForm(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("candidate/candidateApplication-Update.html");
+        Application application = applicationServ.getApplicationById(id);
+        if (application == null) {
+            mav.setViewName("error/applicationNotFound)");
+            return mav;
+        }
+        mav.addObject("application", application);
+        List<QualificationLevel> qualificationLevels = qualificationLevelServ.listOfQualificationLevels();
+        List<Sector> sectors = sectorServ.listOfSectors();
+        mav.addObject("qualificationLevels", qualificationLevels);
+        mav.addObject("sectors", sectors);
+        return mav;
+    }
+
+    // Mise à jour des données d'une candidature
+    @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
+    public void updateApplication(@PathVariable int id, @RequestParam int qualificationlevelid, @RequestParam String cv, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Application existingApplication = applicationServ.getApplicationById(id);
+        applicationServ.updateApplication(existingApplication, qualificationlevelid, cv, sectors);
+        response.sendRedirect("/candidates/application_viewcandidate");
+    }
+}

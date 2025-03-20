@@ -1,5 +1,6 @@
 package fr.atlantique.imt.inf211.jobmngt.controller;
 
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +14,14 @@ import org.springframework.stereotype.Controller;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
+import fr.atlantique.imt.inf211.jobmngt.entity.QualificationLevel;
+import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
 import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.service.JobOfferService;
 import fr.atlantique.imt.inf211.jobmngt.service.CompanyService;
 import fr.atlantique.imt.inf211.jobmngt.service.ApplicationService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -102,31 +106,29 @@ public class CompanyDaoController {
         return mav;
     }
 
+    // Suppression d'une entreprise
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public void deleteCompany(@PathVariable int id, HttpServletResponse response) throws IOException {
+        Company company = companyServ.getCompany(id);
+        companyServ.removeCompany(company);
+        response.sendRedirect("/companies");
+    }
+    
 
-    /* 
-    // Modify information about a company
-    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company replaceCompany(@PathVariable int id) {
-        Company company = companyDao.findById(id);
-        if (company != null) {
-            company.getAppuser().setMail("atlantique@imt.fr");
-            company.getAppuser().setPassword("5678");
-            company.setDenomination("IMT Atlantique");
-            company.setDescription("Une école d\'ingénieurs généraliste");
-
-            return companyDao.merge(company);
-        }
-        return null;
+    // Afficher le formulaire avec les valeurs existantes
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView showUpdateForm(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("company/companyUpdate.html");
+        Company company = companyServ.getCompany(id);
+        mav.addObject("company", company);
+        return mav;
     }
 
-    // Delete a company
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public void deleteCompany(@PathVariable int id) {
-        Company company = companyDao.findById(id);
-        if (company != null) {
-            AppUser appUser = company.getAppuser();
-            companyDao.remove(company);
-            appUserDao.remove(appUser);
-        }
-    }*/
+    // Mise à jour des données d'une entreprise
+    @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
+    public void updateCompany(@PathVariable int id, @RequestParam String denomination, @RequestParam String description, @RequestParam String city, HttpServletResponse request, HttpServletResponse response) throws IOException {
+        Company existingCompany = companyServ.getCompany(id);
+        companyServ.updateCompany(existingCompany, denomination, description, city);
+        response.sendRedirect("/companies");
+    }
 }

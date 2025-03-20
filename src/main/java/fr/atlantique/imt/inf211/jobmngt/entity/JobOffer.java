@@ -63,7 +63,7 @@ public class JobOffer  implements java.io.Serializable {
        this.offermessages = offermessages;
     }
    
-     @Id
+    @Id
 	@SequenceGenerator(name = "JOBOFFER_ID_GENERATOR", sequenceName = "JOBOFFER_ID_SEQ",allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "JOBOFFER_ID_GENERATOR") 
 

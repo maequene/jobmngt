@@ -1,14 +1,16 @@
 package fr.atlantique.imt.inf211.jobmngt.service;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
+import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Company;
+import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import jakarta.transaction.Transactional;
-import fr.atlantique.imt.inf211.jobmngt.dao.CompanyDao;
-
-import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Component
@@ -50,4 +52,15 @@ public class CompanyServiceImp implements CompanyService {
         return AppUserDao.findByMail(mail).isEmpty();
     }
 
+    @Transactional
+    public void removeCompany(Company company) {
+        companyDao.remove(company);
+    }
+
+        @Transactional 
+    public void updateCompany(Company company, String denomination, String description, String city){
+        company.setDenomination(denomination);
+        company.setDescription(description);
+        company.setCity(city);
+    }
 }
