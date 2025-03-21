@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
-import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
@@ -62,7 +61,7 @@ public class CandidateController {
     public String newCandidateData(@RequestParam String mail, @RequestParam String password, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, RedirectAttributes redirectAttributes) {
         if (!candidateServ.emailExist(mail)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Cette adresse e-mail est déjà utilisée.");
-            return "redirect:/companies/create"; // Redirige vers la page de création avec un message d'erreur
+            return "redirect:/candidates/create"; // Redirige vers la page de création avec un message d'erreur
         } else {
             candidateServ.addCandidate(mail, password, firstname, lastname, city);
             return "redirect:/candidates";

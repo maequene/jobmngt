@@ -2,7 +2,6 @@ package fr.atlantique.imt.inf211.jobmngt.service;
 
 import java.util.List;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
-import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 
 public interface CandidateService {
 

@@ -4,6 +4,9 @@
     <header>
         <h2>Job Offer Modification</h2>
     </header>
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
     <form th:action="@{/joboffer/updateData/}+${joboffer.id}" method="get">
         <fieldset class="mb-3">
             <label for="title" class="form-label">Title</label>:
@@ -16,7 +19,7 @@
         <fieldset>
             <legend>Qualification level</legend>
             <select name="qualificationlevelid" class="form-select" required>
-                <option th:value="${joboffer.qualificationlevel.id}" th:text="${joboffer.qualificationlevel.label}"></option> <!-- Option vide par défaut -->
+                <option th:value="${joboffer.qualificationlevel.id}" th:text="${joboffer.qualificationlevel.label}"></option>
                 <option th:each="ql : ${qualificationLevels}" th:value="${ql.id}" th:text="${ql.label}"></option>
             </select>
         </fieldset>
@@ -27,6 +30,7 @@
                   <input type="checkbox" name="sectors" th:value="${s.id}" th:text="${s.label}" th:checked="${joboffer.sectors.![id].contains(s.id)}"/>
                 </div>
               </div>
+              <input type="checkbox" name="sectors" th:value="0" checked style="display: none;" />
         </fieldset>
         <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
         <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>

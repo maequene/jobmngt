@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
@@ -22,8 +22,9 @@ import fr.atlantique.imt.inf211.jobmngt.service.QualificationLevelService;
 import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
+@Controller
 @RequestMapping(value = "/joboffer")
 public class JobOfferController {
 
@@ -64,14 +65,20 @@ public class JobOfferController {
 
     // Création des données d'une nouvelle offre
     @RequestMapping(value = "/createdata", method = RequestMethod.GET)
-    public void newJobOfferData(@RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public String newJobOfferData(@RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException{
         AppUser appUser = (AppUser) request.getSession().getAttribute("user");
         if (appUser != null) {
-            Company company = companyServ.getCompany(appUser.getId());
-            int id = jobOfferServ.addJobOffer(company, qualificationlevelid, title, taskdescription, sectors);
-            response.sendRedirect("/joboffer/" + id); 
+            if (sectors.size() == 1 && sectors.contains(0)) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Sélectionner au moins un secteur");
+                return "redirect:/joboffer/create";
+            } else {
+                sectors.removeIf(s -> s == 0);
+                Company company = companyServ.getCompany(appUser.getId());
+                int id = jobOfferServ.addJobOffer(company, qualificationlevelid, title, taskdescription, sectors);
+                return "redirect:/joboffer/" + id;
+            }
         } else {
-            response.sendRedirect("/login");
+            return "redirect:/login";
         }
     }
 
@@ -107,9 +114,15 @@ public class JobOfferController {
 
     // Mise à jour des données d'une offre d'emploi
     @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
-    public void updateJobOffer(@PathVariable int id, @RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletResponse request, HttpServletResponse response) throws IOException {
+    public String updateJobOffer(@PathVariable int id, @RequestParam int qualificationlevelid, @RequestParam String title, @RequestParam String taskdescription, @RequestParam List<Integer> sectors, HttpServletResponse request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException {
         JobOffer existingJobOffer = JobOfferServ.getJobOfferById(id);
-        jobOfferServ.updateJobOffer(existingJobOffer, qualificationlevelid, title, taskdescription, sectors);
-        response.sendRedirect("/companies/joboffers_viewcompany");
+        if (sectors.size() == 1 && sectors.contains(0)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Sélectionner au moins un secteur");
+            return "redirect:/joboffer/update/" + id;
+        } else {
+            sectors.removeIf(s -> s == 0);
+            jobOfferServ.updateJobOffer(existingJobOffer, qualificationlevelid, title, taskdescription, sectors);
+            return "redirect:/companies/joboffers_viewcompany";
+        }
     }
 }
