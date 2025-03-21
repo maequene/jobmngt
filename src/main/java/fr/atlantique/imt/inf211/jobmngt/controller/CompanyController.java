@@ -109,10 +109,15 @@ public class CompanyController {
     }    
 
     // Afficher le formulaire avec les valeurs existantes
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public ModelAndView showUpdateForm(@PathVariable int id) {
+    @RequestMapping(value = "/update/", method = RequestMethod.GET)
+    public ModelAndView showUpdateForm(HttpServletRequest request) {
+        // Récupère la session HTTP
+        HttpSession session = request.getSession();
+        
+        // Vérifie si l'utilisateur est connecté (s'il existe un attribut "user" dans la session)
+        AppUser appUser = (AppUser) session.getAttribute("user");
+        Company company = companyServ.getCompany(appUser.getId());
         ModelAndView mav = new ModelAndView("company/companyUpdate.html");
-        Company company = companyServ.getCompany(id);
         mav.addObject("company", company);
         return mav;
     }
