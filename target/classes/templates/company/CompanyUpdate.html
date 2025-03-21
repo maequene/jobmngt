@@ -15,8 +15,9 @@
         </fieldset>
         <fieldset>
             <label for="city" class="form-label">City</label>:
-            <input type="text" id="city" class="form-control" name="city" th:value="${company.city}" required />
+            <input type="text" id="city" class="form-control" name="city" th:value="${company.appuser.city}" required />
         </fieldset>
+        <p><br></p>
        
         <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
         <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>

@@ -4,6 +4,7 @@ import java.util.List;
 import fr.atlantique.imt.inf211.jobmngt.dao.AppUserDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
+import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import jakarta.transaction.Transactional;
 import fr.atlantique.imt.inf211.jobmngt.dao.CandidateDao;
 
@@ -50,5 +51,12 @@ public class CandidateServiceImp implements CandidateService {
 
     public boolean emailExist(String mail) {
         return AppUserDao.findByMail(mail).isEmpty();
+    }
+
+    @Transactional 
+    public void updateCandidate(Candidate candidate, String firstname, String lastname, String city){
+        candidate.setFirstname(firstname);
+        candidate.setLastname(lastname);
+        candidate.getAppuser().setCity(city);
     }
 }

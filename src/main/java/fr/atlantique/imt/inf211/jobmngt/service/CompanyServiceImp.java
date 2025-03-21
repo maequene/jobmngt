@@ -55,6 +55,6 @@ public class CompanyServiceImp implements CompanyService {
     public void updateCompany(Company company, String denomination, String description, String city){
         company.setDenomination(denomination);
         company.setDescription(description);
-        company.setCity(city);
+        company.getAppuser().setCity(city);
     }
 }

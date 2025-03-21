@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
 import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
+import fr.atlantique.imt.inf211.jobmngt.entity.Company;
 import fr.atlantique.imt.inf211.jobmngt.entity.Application;
 import fr.atlantique.imt.inf211.jobmngt.entity.JobOffer;
 import fr.atlantique.imt.inf211.jobmngt.service.CandidateService;
@@ -116,5 +117,27 @@ public class CandidateController {
         AppUser appuser = (AppUser) session.getAttribute("user");
         appuserServ.removeAppUserCandidate(appuser);
         response.sendRedirect("/logout");
+    }
+
+    // Afficher le formulaire avec les valeurs existantes
+    @RequestMapping(value = "/update/", method = RequestMethod.GET)
+    public ModelAndView showUpdateForm(HttpServletRequest request) {
+        // Récupère la session HTTP
+        HttpSession session = request.getSession();
+        
+        // Vérifie si l'utilisateur est connecté (s'il existe un attribut "user" dans la session)
+        AppUser appUser = (AppUser) session.getAttribute("user");
+        Candidate candidate = candidateServ.getCandidate(appUser.getId());
+        ModelAndView mav = new ModelAndView("candidate/candidateUpdate.html");
+        mav.addObject("candidate", candidate);
+        return mav;
+    }
+
+    // Mise à jour des données d'un candidat
+    @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
+    public void updateCandidate(@PathVariable int id, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, HttpServletResponse request, HttpServletResponse response) throws IOException {
+        Candidate existingCandidate = candidateServ.getCandidate(id);
+        candidateServ.updateCandidate(existingCandidate, firstname, lastname, city);
+        response.sendRedirect("/candidates");
     }
 }
