@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/candidate/candidateBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Candidate Modification</h2>
+    </header>
+    <form th:action="@{/candidates/updateData/}+${candidate.id}" method="get">
+        <fieldset class="mb-3">
+            <label for="lastname" class="form-label">Lastname</label>:
+            <input type="text" id="lastname" class="form-control" name="lastname" autofocus="autofocus" th:value="${candidate.lastname}" required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="firstname" class="form-label">Firstname</label>:
+            <input type="text" id="firstname" class="form-control" name="firstname" th:value="${candidate.firstname}" required />
+        </fieldset>
+        <fieldset>
+            <label for="city" class="form-label">City</label>:
+            <input type="text" id="city" class="form-control" name="city" th:value="${candidate.appuser.city}" required />
+        </fieldset>
+       
+        <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
+        <a th:href="@{/candidates}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+        <p><br></p>
+    </form>
+
+    <footer>
+        <a th:href="@{/candidates}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+        <p><br></p>
+        </footer>
+</article>
+</html>
