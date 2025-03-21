@@ -116,32 +116,4 @@ public class CompanyController {
         appuserServ.removeAppUserCompany(appuser);
         response.sendRedirect("/logout");
     }
-
-
-    /* 
-    // Modify information about a company
-    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company replaceCompany(@PathVariable int id) {
-        Company company = companyDao.findById(id);
-        if (company != null) {
-            company.getAppuser().setMail("atlantique@imt.fr");
-            company.getAppuser().setPassword("5678");
-            company.setDenomination("IMT Atlantique");
-            company.setDescription("Une école d\'ingénieurs généraliste");
-
-            return companyDao.merge(company);
-        }
-        return null;
-    }
-
-    // Delete a company
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public void deleteCompany(@PathVariable int id) {
-        Company company = companyDao.findById(id);
-        if (company != null) {
-            AppUser appUser = company.getAppuser();
-            companyDao.remove(company);
-            appUserDao.remove(appUser);
-        }
-    }*/
 }

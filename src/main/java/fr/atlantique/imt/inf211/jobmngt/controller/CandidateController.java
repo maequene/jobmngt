@@ -118,31 +118,3 @@ public class CandidateController {
         response.sendRedirect("/logout");
     }
 }
-
-
-    /* 
-    // Modify information about a candidate
-    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Candidate replaceCandidate(@PathVariable int id) {
-        Candidate candidate = candidateDao.findById(id);
-        if (candidate != null) {
-            candidate.getAppuser().setMail("atlantique@imt.fr");
-            candidate.getAppuser().setPassword("5678");
-            candidate.setFirstname("FIP");
-            candidate.setLastname("2A");
-
-            return candidateDao.merge(candidate);
-        }
-        return null;
-    }
-
-    // Delete a candidate
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public void deleteCandidate(@PathVariable int id) {
-        Candidate candidate = candidateDao.findById(id);
-        if (candidate != null) {
-            AppUser appUser = candidate.getAppuser();
-            candidateDao.remove(candidate);
-            appUserDao.remove(appUser);
-        }
-    }*/

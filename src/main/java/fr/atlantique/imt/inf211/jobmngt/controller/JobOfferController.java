@@ -91,24 +91,4 @@ public class JobOfferController {
         jobOfferServ.removeJoboffer(joboffer);
         response.sendRedirect("/companies/joboffers_viewcompany");
     }
-
-    /*
-    @RequestMapping(value = "/joboffers/sector/{sectorId}/qualification/{qualificationLevelId}", method = RequestMethod.GET)
-    public List<JobOffer> getJobOffersBySectorAndQualification(@PathVariable("sectorId") int sectorId, @PathVariable("qualificationLevelId") int qualificationLevelId) {
-        return JobOfferDao.findBySectorAndQualification(sectorId, qualificationLevelId);
-    }
-
-    /* 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JobOffer updateJobOffer(@PathVariable int id) {
-        // Récupérer l'offre d'emploi existante avec l'ID de l'offre d'emploi
-        JobOffer existingJobOffer = JobOfferDao.findById(id);
-        if (existingJobOffer != null) {
-            existingJobOffer.setTitle("Développeur Java Fullstack");
-            existingJobOffer.setTaskdescription("Développement Java Fullstack en agile");
-            existingJobOffer.setPublicationdate(new Date());
-            JobOfferDao.merge(existingJobOffer);
-        }
-        return existingJobOffer;
-    }*/
  }
