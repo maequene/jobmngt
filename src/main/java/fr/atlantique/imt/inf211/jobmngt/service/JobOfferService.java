@@ -19,5 +19,5 @@ public interface JobOfferService {
 
     public List<JobOffer> findJobOffersBySectorsAndQualification(Set<Sector> sectors, int qualificationlevelid);
     
+    public void updateJobOffer(JobOffer joboffer, int qualificationlevelid, String title, String taskdescription, List<Integer> sectors);
 }
-

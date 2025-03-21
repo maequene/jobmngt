@@ -106,6 +106,15 @@ public class CompanyController {
         mav.addObject("joboffer", JobOffer);
         mav.addObject("Applications", applis);
         return mav;
+    }    
+
+    // Afficher le formulaire avec les valeurs existantes
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView showUpdateForm(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("company/companyUpdate.html");
+        Company company = companyServ.getCompany(id);
+        mav.addObject("company", company);
+        return mav;
     }
 
     // Suppression d'une company
@@ -115,5 +124,13 @@ public class CompanyController {
         AppUser appuser = (AppUser) session.getAttribute("user");
         appuserServ.removeAppUserCompany(appuser);
         response.sendRedirect("/logout");
+    }
+
+    // Mise à jour des données d'une entreprise
+    @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
+    public void updateCompany(@PathVariable int id, @RequestParam String denomination, @RequestParam String description, @RequestParam String city, HttpServletResponse request, HttpServletResponse response) throws IOException {
+        Company existingCompany = companyServ.getCompany(id);
+        companyServ.updateCompany(existingCompany, denomination, description, city);
+        response.sendRedirect("/companies");
     }
 }

@@ -5,16 +5,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
-import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
-import fr.atlantique.imt.inf211.jobmngt.entity.Application;
-import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.QualificationLevelDao;
 import fr.atlantique.imt.inf211.jobmngt.dao.SectorDao;
-import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
-
-import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
+import fr.atlantique.imt.inf211.jobmngt.entity.Application;
+import fr.atlantique.imt.inf211.jobmngt.entity.Candidate;
+import fr.atlantique.imt.inf211.jobmngt.entity.Sector;
+import jakarta.transaction.Transactional;
 
 
 @Component
@@ -70,5 +70,16 @@ public class ApplicationServiceImp implements ApplicationService {
             }
         }
         return applications;
+    }
+
+     @Transactional 
+    public void updateApplication(Application application, int qualificationlevelid, String cv, List<Integer> sectors){
+        application.setQualificationlevel(qualificationLevelDao.findById(qualificationlevelid));
+        application.setCv(cv);
+        Set<Sector> sectorSet = new HashSet<>();
+        for (Integer sectorid : sectors) {
+            sectorSet.add(sectorDao.findById(sectorid));
+        }
+        application.setSectors(sectorSet);
     }
 }

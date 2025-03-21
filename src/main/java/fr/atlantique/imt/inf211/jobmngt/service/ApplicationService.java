@@ -19,5 +19,6 @@ public interface ApplicationService {
 
     public List<Application> findApplicationsBySectorsandQualificationLevel(Set<Sector> sectors, int qualificationlevelid);
     
+    public void updateApplication(Application application, int qualificationlevelid, String cv, List<Integer> sectors);
 }
 
