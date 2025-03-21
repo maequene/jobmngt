@@ -26,9 +26,14 @@
                 </td>                
                 <td th:text="${app.qualificationlevel.label}" />
                 <td>
-                    <!-- Link to edit offer -->
-                    <a th:href="@{/candidates/application-joboffer/}+${app.id}" class="btn btn-large btn-success" alt="Edit" title="edit offer">
+                    <!-- Link to view application -->
+                    <a th:href="@{/candidates/application-joboffer/}+${app.id}" class="btn btn-large btn-success" alt="view" title="view offer">
                         <i class="bi bi-info-circle"></i>
+                    </a>
+                    <!-- Link to update application -->
+                    <a th:href="@{/application/update/}+${app.id}" class="btn btn-large btn-success" 
+                        alt="Update" title="update application">
+                        <i class="bi bi-pen"></i>
                     </a>
                     <!-- Link to delete offer -->
                     <a th:href="@{/application/delete/}+${app.id}" class="btn btn-large btn-danger"

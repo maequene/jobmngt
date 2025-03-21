@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/company/companyBase :: article(~{::article})}">
+<article>
+    <header>
+        <h2>Company Modification</h2>
+    </header>
+    <form th:action="@{/companies/updateData/}+${company.id}" method="get">
+        <fieldset class="mb-3">
+            <label for="denomination" class="form-label">Dénomination</label>:
+            <input type="text" id="denomination" class="form-control" name="denomination" autofocus="autofocus" th:value="${company.denomination}" required />
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="description" class="form-label">Description</label>:
+            <input type="text" id="description" class="form-control" name="description" th:value="${company.description}" required />
+        </fieldset>
+        <fieldset>
+            <label for="city" class="form-label">City</label>:
+            <input type="text" id="city" class="form-control" name="city" th:value="${company.city}" required />
+        </fieldset>
+       
+        <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
+        <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
+        <a th:href="@{/companies}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
+        <p><br></p>
+    </form>
+
+    <footer>
+        <a th:href="@{/companies}" class="btn btn-secondary" title="go back"><i class="bi bi-list-columns"></i></a>
+        <p><br></p>
+        </footer>
+</article>
+</html>

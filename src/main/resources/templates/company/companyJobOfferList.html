@@ -33,6 +33,11 @@
                     <a th:href="@{/companies/joboffer-candidate/}+${offer.id}" class="btn btn-large btn-success" alt="Edit" title="edit offer">
                         <i class="bi bi-info-circle"></i>
                     </a>
+                    <!-- Link to update offer -->
+                    <a th:href="@{/joboffer/update/}+${offer.id}" class="btn btn-large btn-success" 
+                        alt="Update" title="update offer">
+                        <i class="bi bi-pen"></i>
+                    </a>
                     <!-- Link to delete offer -->
                     <a th:href="@{/joboffer/delete/}+${offer.id}" class="btn btn-large btn-danger mt-1"
                         alt="Delete" title="delete offer" data-id="@{/offers/{offerId}/delete(offerId=${offer.id})}" th:attrappend="title=${' ' + offer.title}">
