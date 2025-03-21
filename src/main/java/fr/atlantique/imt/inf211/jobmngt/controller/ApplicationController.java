@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.atlantique.imt.inf211.jobmngt.dao.ApplicationDao;
 import fr.atlantique.imt.inf211.jobmngt.entity.AppUser;
@@ -26,7 +27,7 @@ import fr.atlantique.imt.inf211.jobmngt.service.SectorService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@RestController
+@Controller
 @RequestMapping(value = "/application")
 public class ApplicationController {
 
@@ -69,14 +70,20 @@ public class ApplicationController {
 
     // Création des données d'une nouvelle candidature
     @RequestMapping(value = "/createdata", method = RequestMethod.GET)
-    public void newApplicationData(@RequestParam int qualificationlevelid, @RequestParam String cv, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public String newApplicationData(@RequestParam int qualificationlevelid, @RequestParam String cv, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException{
         AppUser appUser = (AppUser) request.getSession().getAttribute("user");
         if (appUser != null) {
-            Candidate candidate = candidateService.getCandidate(appUser.getId());
-            int id = applicationServ.addApplication(candidate, qualificationlevelid, cv, sectors);
-            response.sendRedirect("/application/" + id);
+            if (sectors.size() == 1 && sectors.contains(0)) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Sélectionner au moins un secteur");
+                return "redirect:/application/create";
+            } else {
+                sectors.removeIf(s -> s == 0);
+                Candidate candidate = candidateService.getCandidate(appUser.getId());
+                int id = applicationServ.addApplication(candidate, qualificationlevelid, cv, sectors);
+                return "redirect:/application/" + id;
+            }
         } else {
-            response.sendRedirect("/login");
+            return "redirect:/login";
         }
     }
 
@@ -118,10 +125,15 @@ public class ApplicationController {
 
     // Mise à jour des données d'une candidature
     @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
-    public void updateApplication(@PathVariable int id, @RequestParam int qualificationlevelid, @RequestParam String cv, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public String updateApplication(@PathVariable int id, @RequestParam int qualificationlevelid, @RequestParam String cv, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException{
         Application existingApplication = applicationServ.getApplicationById(id);
-        logger.log(Level.INFO, "#####################################: {0},", id);
-        applicationServ.updateApplication(existingApplication, qualificationlevelid, cv, sectors);
-        response.sendRedirect("/candidates/application_viewcandidate");
+        if (sectors.size() == 1 && sectors.contains(0)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Sélectionner au moins un secteur");
+            return "redirect:/application/update/" + id;
+        } else {
+            sectors.removeIf(s -> s == 0);
+            applicationServ.updateApplication(existingApplication, qualificationlevelid, cv, sectors);
+            return "redirect:/candidates/application_viewcandidate";
+        }
     }
 }

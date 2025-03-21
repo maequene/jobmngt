@@ -4,6 +4,9 @@
     <header>
         <h2>Application Modification</h2>
     </header>
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
     <form th:action="@{/application/updateData/}+${applic.id}" method="get">
         <fieldset class="mb-3">
             <label for="cv" class="form-label">CV</label>:
@@ -22,6 +25,7 @@
                   <input type="checkbox" name="sectors" th:value="${s.id}" th:text="${s.label}" th:checked="${applic.sectors.![id].contains(s.id)}"/>
                 </div>
               </div>
+              <input type="checkbox" name="sectors" th:value="0" checked style="display: none;" />
         </fieldset>
             <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
             <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
