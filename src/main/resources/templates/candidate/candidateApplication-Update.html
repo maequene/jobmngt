@@ -4,10 +4,10 @@
     <header>
         <h2>Application Modification</h2>
     </header>
-    <form th:action="@{/application/updateData/}+${application.id}" method="get">
+    <form th:action="@{/application/updateData/}+${applic.id}" method="get">
         <fieldset class="mb-3">
             <label for="cv" class="form-label">CV</label>:
-            <input type="text" id="cv" class="form-control" name="cv" autofocus="autofocus" required />
+            <input type="text" id="cv" class="form-control" name="cv" autofocus="autofocus" th:value="${applic.cv}" required />
         </fieldset>
         <fieldset>
             <legend>Qualification level :</legend>
@@ -17,13 +17,13 @@
         </fieldset>
         <fieldset>
             <legend>Sectors</legend>
-            <div id="sectorslist" th:each="s :${sectors}">
+              <div id="sectorslist" th:each="s :${sectors}">
                 <div class="asector">
-                    <input type="checkbox" name="sectors" th:value="${s.id}" th:text="${s.label}"/>
+                  <input type="checkbox" name="sectors" th:value="${s.id}" th:text="${s.label}" th:checked="${applic.sectors.![id].contains(s.id)}"/>
                 </div>
-            </div>
+              </div>
         </fieldset>
-            <a th:href="@{/candidates/application_viewcandidate}" class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></a>
+            <button type="submit"  class="btn btn-primary" th:title="${action}"><i class="bi bi-floppy"></i></button>
             <button type="reset" class="btn btn-secondary" value="Reset" title="reset"><i class="bi bi-eraser-fill"></i></button>
             <a th:href="@{/candidates/application_viewcandidate}" class="btn btn-danger" title="go back"><i class="bi bi-x-square"></i></a>
             <p><br></p>

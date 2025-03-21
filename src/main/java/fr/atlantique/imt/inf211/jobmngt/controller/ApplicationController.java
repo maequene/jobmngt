@@ -108,11 +108,7 @@ public class ApplicationController {
     public ModelAndView showUpdateForm(@PathVariable int id) {
         ModelAndView mav = new ModelAndView("candidate/candidateApplication-Update.html");
         Application application = applicationServ.getApplicationById(id);
-        if (application == null) {
-            mav.setViewName("error/applicationNotFound)");
-            return mav;
-        }
-        mav.addObject("application", application);
+        mav.addObject("applic", application);
         List<QualificationLevel> qualificationLevels = qualificationLevelServ.listOfQualificationLevels();
         List<Sector> sectors = sectorServ.listOfSectors();
         mav.addObject("qualificationLevels", qualificationLevels);
@@ -124,6 +120,7 @@ public class ApplicationController {
     @RequestMapping(value = "/updateData/{id}", method = RequestMethod.GET) 
     public void updateApplication(@PathVariable int id, @RequestParam int qualificationlevelid, @RequestParam String cv, @RequestParam List<Integer> sectors, HttpServletRequest request, HttpServletResponse response) throws IOException{
         Application existingApplication = applicationServ.getApplicationById(id);
+        logger.log(Level.INFO, "#####################################: {0},", id);
         applicationServ.updateApplication(existingApplication, qualificationlevelid, cv, sectors);
         response.sendRedirect("/candidates/application_viewcandidate");
     }
