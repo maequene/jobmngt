@@ -15,7 +15,5 @@ public interface CompanyService {
 
     public boolean emailExist(String mail);
 
-    public void removeCompany(Company company);
-
     public void updateCompany(Company company, String denomination, String description, String city);
 }

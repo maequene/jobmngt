@@ -104,16 +104,7 @@ public class CompanyDaoController {
         mav.addObject("joboffer", JobOffer);
         mav.addObject("Applications", applis);
         return mav;
-    }
-
-    // Suppression d'une entreprise
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public void deleteCompany(@PathVariable int id, HttpServletResponse response) throws IOException {
-        Company company = companyServ.getCompany(id);
-        companyServ.removeCompany(company);
-        response.sendRedirect("/companies");
-    }
-    
+    }    
 
     // Afficher le formulaire avec les valeurs existantes
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)

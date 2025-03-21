@@ -103,20 +103,6 @@ public class ApplicationDaoController {
         response.sendRedirect("/candidates/application_viewcandidate");
     }
 
-    /*
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JobOffer updateJobOffer(@PathVariable int id) {
-        // Récupérer l'offre d'emploi existante avec l'ID de l'offre d'emploi
-        JobOffer existingJobOffer = JobOfferDao.findById(id);
-        if (existingJobOffer != null) {
-            existingJobOffer.setTitle("Développeur Java Fullstack");
-            existingJobOffer.setTaskdescription("Développement Java Fullstack en agile");
-            existingJobOffer.setPublicationdate(new Date());
-            JobOfferDao.merge(existingJobOffer);
-        }
-        return existingJobOffer;
-    }*/
-
     // Afficher le formulaire avec les valeurs existantes
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public ModelAndView showUpdateForm(@PathVariable int id) {

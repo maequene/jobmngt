@@ -52,11 +52,6 @@ public class CompanyServiceImp implements CompanyService {
         return AppUserDao.findByMail(mail).isEmpty();
     }
 
-    @Transactional
-    public void removeCompany(Company company) {
-        companyDao.remove(company);
-    }
-
         @Transactional 
     public void updateCompany(Company company, String denomination, String description, String city){
         company.setDenomination(denomination);
