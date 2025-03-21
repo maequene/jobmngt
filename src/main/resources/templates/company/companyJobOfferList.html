@@ -52,12 +52,14 @@
         <a th:href="@{/joboffer/create}" class="btn btn-large btn-primary" title="add new offer">
             <i class="bi bi-plus"></i>
         </a>
-        <a th:href="@{/companies/update/}" class="btn btn-large btn-success" title="Update company" style="float: right;">
-            <i class="bi bi-pen"></i> Update company informations
-        </a> 
-        <a th:href="@{/companies/delete}" class="btn btn-large btn-danger" title="Delete company" style="float: right;">
-            <i class="bi bi-trash"></i> Delete my company
-        </a>        
+        <div class="d-flex justify-content-end gap-2">
+            <a th:href="@{/companies/update/}" class="btn btn-large btn-success" title="Update company" style="float: right;">
+                <i class="bi bi-pen"></i> Update company informations
+            </a>
+            <a th:href="@{/companies/delete}" class="btn btn-large btn-danger" title="Delete company" style="float: right;">
+                <i class="bi bi-trash"></i> Delete my company
+            </a>
+        </div>      
         <p><br></p>
     </footer>
 </article>
