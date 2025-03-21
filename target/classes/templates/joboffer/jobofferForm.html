@@ -20,7 +20,7 @@
         <fieldset>
             <legend>Qualification level</legend>
             <select name="qualificationlevelid" class="form-select" required>
-                <option value="">-- Select a qualification level --</option> <!-- Option vide par défaut -->
+                <option value="">-- Select a sector --</option> <!-- Option vide par défaut -->
                 <option th:each="ql : ${qualificationLevels}" th:value="${ql.id}" th:text="${ql.label}"></option>
             </select>
         </fieldset>

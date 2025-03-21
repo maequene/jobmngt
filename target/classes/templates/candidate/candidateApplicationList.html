@@ -26,18 +26,13 @@
                 </td>                
                 <td th:text="${app.qualificationlevel.label}" />
                 <td>
-                    <!-- Link to edit application -->
-                    <a th:href="@{/candidates/application-joboffer/}+${app.id}" class="btn btn-large btn-success" alt="Edit" title="edit application">
+                    <!-- Link to edit offer -->
+                    <a th:href="@{/candidates/application-joboffer/}+${app.id}" class="btn btn-large btn-success" alt="Edit" title="edit offer">
                         <i class="bi bi-info-circle"></i>
                     </a>
-                    <!-- Link to update application -->
-                    <a th:href="@{/application/update/}+${app.id}" class="btn btn-large btn-success" 
-                        alt="Update" title="update application">
-                        <i class="bi bi-pen"></i>
-                    </a>
-                    <!-- Link to delete application -->
+                    <!-- Link to delete offer -->
                     <a th:href="@{/application/delete/}+${app.id}" class="btn btn-large btn-danger"
-                        alt="Delete" title="delete application">
+                        alt="Delete" title="delete offer">
                         <i class="bi bi-trash"></i>
                     </a>
                 </td>
@@ -45,7 +40,7 @@
         </tbody>
     </table>
     <footer>
-        <!-- Link to add a new application -->
+        <!-- Link to add a new offer -->
         <a th:href="@{/application/create}" class="btn btn-large btn-primary" title="add new application">
             <i class="bi bi-plus"></i>
         </a>

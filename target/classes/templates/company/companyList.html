@@ -18,12 +18,9 @@
                 <td th:text="${comp.appuser.city}" />
                 <td th:text="${comp.joboffers.size()}" />
                 <td>
-                    <!-- Link to view company information -->
                     <a th:href="@{companies/}+${comp.id}" alt="Company details" title="view details" class="btn btn-large btn-secondary">
                         <i class="bi bi-eye"></i>
                     </a>
-                </td>
-
                 </td>
             </tr>
         </tbody>
