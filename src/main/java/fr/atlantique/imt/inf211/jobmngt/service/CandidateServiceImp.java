@@ -25,6 +25,7 @@ public class CandidateServiceImp implements CandidateService {
         return candidateDao.findAll("appuser.mail", "ASC");
     }
 
+    @Override
     @Transactional
     public void addCandidate(String mail, String password, String firstname, String lastname, String city) {
         AppUser appUser = new AppUser();
@@ -43,15 +44,18 @@ public class CandidateServiceImp implements CandidateService {
         candidateDao.persist(aNewCandidate);
     }
 
+    @Override
     @Transactional
     public Candidate getCandidate(Integer id) {
         return candidateDao.findById(id);
     }
 
+    @Override
     public boolean emailExist(String mail) {
         return AppUserDao.findByMail(mail).isEmpty();
     }
 
+    @Override
     @Transactional 
     public void updateCandidate(Candidate candidate, String firstname, String lastname, String city){
         candidate.setFirstname(firstname);

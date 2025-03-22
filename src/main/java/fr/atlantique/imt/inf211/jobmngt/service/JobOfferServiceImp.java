@@ -34,6 +34,7 @@ public class JobOfferServiceImp implements JobOfferService {
         return jobofferDao.findAll("id", "ASC");
     }
 
+    @Override
     @Transactional
     public int addJobOffer(Company company, int qualificationlevelid, String title, String taskdescription, List<Integer> sectors){
         JobOffer joboffer = new JobOffer();
@@ -51,16 +52,19 @@ public class JobOfferServiceImp implements JobOfferService {
         return joboffer.getId();
     }
 
+    @Override
     @Transactional
     public JobOffer getJobOfferById(Integer id) {
         return jobofferDao.findById(id);
     }
 
+    @Override
     @Transactional
     public void removeJoboffer(JobOffer joboffer) {
         jobofferDao.remove(joboffer);
     }
 
+    @Override
     @Transactional
     public List<JobOffer> findJobOffersBySectorsAndQualification (Set<Sector> sectors, int qualificationlevelid) {
         List<JobOffer> joboffers = new ArrayList<>();
@@ -73,6 +77,7 @@ public class JobOfferServiceImp implements JobOfferService {
         return joboffers;
     }
 
+    @Override
     @Transactional 
     public void updateJobOffer(JobOffer joboffer, int qualificationlevelid, String title, String taskdescription, List<Integer> sectors){
         joboffer.setQualificationlevel(qualificationLevelDao.findById(qualificationlevelid));

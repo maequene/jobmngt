@@ -26,6 +26,7 @@ public class CompanyServiceImp implements CompanyService {
         return companyDao.findAll("appuser.mail", "ASC");
     }
 
+    @Override
     @Transactional
     public void addCompany(String mail, String password, String denomination, String description, String city) {
         AppUser appUser = new AppUser();
@@ -42,16 +43,19 @@ public class CompanyServiceImp implements CompanyService {
         companyDao.persist(aNewCompany);
     }
 
+    @Override
     @Transactional
     public Company getCompany(Integer id) {
         return companyDao.findById(id);
     }
 
+    @Override
     public boolean emailExist(String mail) {
         return AppUserDao.findByMail(mail).isEmpty();
     }
 
-        @Transactional 
+    @Override
+    @Transactional 
     public void updateCompany(Company company, String denomination, String description, String city){
         company.setDenomination(denomination);
         company.setDescription(description);

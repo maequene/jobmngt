@@ -34,6 +34,7 @@ public class ApplicationServiceImp implements ApplicationService {
         return applicationDao.findAll("id", "ASC");
     }
 
+    @Override
     @Transactional
     public int addApplication(Candidate candidate, int qualificationlevelid, String cv, List<Integer> sectors){
         Application application = new Application();
@@ -50,16 +51,19 @@ public class ApplicationServiceImp implements ApplicationService {
         return application.getId();
     }
 
+    @Override
     @Transactional
     public Application getApplicationById(Integer id) {
         return applicationDao.findById(id);
     }
 
+    @Override
     @Transactional
     public void removeApplication(Application application) {
         applicationDao.remove(application);
     }
 
+    @Override
     @Transactional
     public List<Application> findApplicationsBySectorsandQualificationLevel(Set<Sector> sectors, int qualificationlevelid) {
         List<Application> applications = new ArrayList<>();
@@ -72,7 +76,8 @@ public class ApplicationServiceImp implements ApplicationService {
         return applications;
     }
 
-     @Transactional 
+    @Override
+    @Transactional 
     public void updateApplication(Application application, int qualificationlevelid, String cv, List<Integer> sectors){
         application.setQualificationlevel(qualificationLevelDao.findById(qualificationlevelid));
         application.setCv(cv);
